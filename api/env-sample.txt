@@ -1,0 +1,18 @@
+# On which port should our api listen
+SERVER_PORT="8000"
+SERVER_HOSTNAME="localhost"
+
+# Database connector config 
+DB_HOST="localhost"
+DB_PORT="3306"
+DB_USER="joedoe"
+DB_PWD="password123"
+DB="myDb"
+
+# Server email
+SMTP_USER="joedoe@email.com"
+SMTP_PASSWORD="password123"
+
+# Access token secret for JWT
+# https://onlinehashtools.com/generate-random-sha256-hash
+ACCESS_TOKEN_SECRET="secret123"

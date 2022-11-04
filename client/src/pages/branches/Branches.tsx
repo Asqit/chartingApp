@@ -4,7 +4,17 @@ import { fetchBranchesReducer } from './reducers/fetchBranchesReducer';
 import { INITIAL } from './models/fetchBranchesModel';
 import { Loader } from '../../components/ui/Loader';
 import { BranchTable } from './components/branchTable/BranchTable';
-import { Typography, Input, Button, Tooltip } from '@material-tailwind/react';
+import {
+	Typography,
+	Input,
+	Button,
+	Tooltip,
+	Tabs,
+	TabsHeader,
+	TabsBody,
+	Tab,
+	TabPanel,
+} from '@material-tailwind/react';
 import { BranchCard } from './components/branchCard/BranchCard';
 import sampleMap from '../../assets/images/sample.png';
 
@@ -60,33 +70,78 @@ function Branches() {
 					</Button>
 				</div>
 			</article>
-			<div className="flex-grow border rounded-2xl p-2 flex">
-				<div className="p-2 w-1/2">
-					{payload
-						? payload.map((record) => {
-								return <BranchCard {...record} />;
-						  })
-						: null}
-					{payload
-						? payload.map((record) => {
-								return <BranchCard {...record} />;
-						  })
-						: null}
+			<div>
+				<Tabs value="list">
+					<TabsHeader>
+						<Tab key={'map'} value={'map'}>
+							Kartičky
+						</Tab>
+						<Tab key={'list'} value={'list'}>
+							List
+						</Tab>
+					</TabsHeader>
+					<TabsBody
+						animate={{
+							mount: { y: 0 },
+							unmount: { y: 250 },
+						}}
+					>
+						<TabPanel value={'map'} key="map" className="max-w-min">
+							<div className="flex w-full h-full">
+								<div className="w-[45%]">
+									{payload
+										? payload.map((record) => {
+												return (
+													<BranchCard {...record} />
+												);
+										  })
+										: null}
+									{payload
+										? payload.map((record) => {
+												return (
+													<BranchCard {...record} />
+												);
+										  })
+										: null}
+									{payload
+										? payload.map((record) => {
+												return (
+													<BranchCard {...record} />
+												);
+										  })
+										: null}
 
-					{!payload ? (
-						<div className="w-full h-full flex flex-col items-center justify-center">
-							<Typography variant="h4">Chyba</Typography>
-							<Typography variant="paragraph">
-								Nebyly nalezeny žádné pobočky
-							</Typography>
-						</div>
-					) : null}
-				</div>
-				<img
-					src={sampleMap}
-					alt="sda"
-					className="w-1/2 object-cover rounded-2xl"
-				/>
+									{!payload ? (
+										<div className="w-full h-full flex flex-col items-center justify-center">
+											<Typography variant="h4">
+												Chyba
+											</Typography>
+											<Typography variant="paragraph">
+												Nebyly nalezeny žádné pobočky
+											</Typography>
+										</div>
+									) : null}
+								</div>
+								<img
+									src={sampleMap}
+									alt="google map"
+									className="w-[45%] border border-red-500 object-cover rounded-2xl"
+								/>
+							</div>
+						</TabPanel>
+						<TabPanel value={'list'} key="list">
+							{payload ? <BranchTable cells={payload} /> : null}
+							{!payload ? (
+								<div className="w-full h-full flex flex-col items-center justify-center">
+									<Typography variant="h4">Chyba</Typography>
+									<Typography variant="paragraph">
+										Nebyly nalezeny žádné pobočky
+									</Typography>
+								</div>
+							) : null}
+						</TabPanel>
+					</TabsBody>
+				</Tabs>
 			</div>
 		</section>
 	);

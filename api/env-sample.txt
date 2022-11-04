@@ -13,6 +13,10 @@ DB="myDb"
 SMTP_USER="joedoe@email.com"
 SMTP_PASSWORD="password123"
 
+# Initiate connection with DB via prisma: yarn prisma db pull
+# Generate prisma connector: yarn prisma generate
+DATABASE_URL="mysql://joedoe:password123@localhost:3306/myDb"
+
 # Access token secret for JWT
 # https://onlinehashtools.com/generate-random-sha256-hash
 ACCESS_TOKEN_SECRET="secret123"

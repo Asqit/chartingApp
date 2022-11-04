@@ -37,12 +37,12 @@ function Layout() {
 
 	return (
 		<>
-			<img
-				src={blobs}
-				className="hidden lg:block absolute object-cover w-full h-32"
-				alt="asd"
-			/>
-			<section className="w-screen h-screen relative">
+			<section className="w-full h-screen relative">
+				<img
+					src={blobs}
+					className="hidden lg:block absolute object-cover -z-10 w-full h-32"
+					alt="blobs pattern illustration"
+				/>
 				<div className="flex h-full p-2 gap-2">
 					<aside className="hidden lg:block lg:min-w-[280px] lg:w-1/3 lg:max-w-sm bg-white rounded-2xl shadow-md">
 						<div className="w-full px-4 py-4 text-center flex items-center justify-center">
@@ -74,7 +74,7 @@ function Layout() {
 									<Link
 										to={option.to}
 										key={ulOptions.indexOf(option)}
-										className="w-1/2 mx-auto my-4 flex items-center gap-4 font-medium"
+										className="w-1/2 mx-auto my-4 flex items-center gap-4 font-medium transition-all hover:gap-5"
 									>
 										<option.icon />
 										<span>{option.name}</span>
@@ -84,7 +84,7 @@ function Layout() {
 						</ul>
 					</aside>
 					<article className="flex-grow flex flex-col gap-2 lg:gap-4">
-						<div className="hidden lg:block w-full h-32 bg-transparent" />
+						<div className="hidden lg:block w-full h-36" />
 						<Navbar
 							className="mx-auto py-2 px-4 rounded-2xl lg:hidden"
 							fullWidth={true}
@@ -140,13 +140,9 @@ function Layout() {
 							</div>
 							<MobileNav open={openNav}>{navList}</MobileNav>
 						</Navbar>
-						<main className="flex-grow p-4 bg-white shadow-md rounded-2xl  lg:rounded-none lg:shadow-none">
+						<main className="flex-grow p-2 bg-white shadow-md rounded-2xl lg:rounded-none lg:shadow-none overflow-x-hidden lg:overflow-y-auto">
 							<Outlet />
 						</main>
-						<div className="w-full py-4 px-2 flex justify-between items-center">
-							<p>{new Date().toLocaleString()}</p>
-							<p>Copyright &copy; 2022 Ondřej Tuček</p>
-						</div>
 					</article>
 				</div>
 			</section>

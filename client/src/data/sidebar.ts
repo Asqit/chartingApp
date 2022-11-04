@@ -16,7 +16,7 @@ export const ulOptions = [
 
 	{
 		name: 'Nastavení',
-		to: 'account',
+		to: 'settings',
 		icon: CiSettings,
 	},
 

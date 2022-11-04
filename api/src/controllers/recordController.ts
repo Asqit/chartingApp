@@ -16,7 +16,7 @@ async function getRecord(req: Request, res: Response) {
 
 		delete response.meta;
 
-		res.status(200).json({ ...response });
+		res.status(200).json([...response]);
 	} catch (error) {
 		logging.error('controllers/recordController', `Server error`, error);
 		res.status(500).json({
@@ -35,7 +35,7 @@ async function getAllRecords(req: Request, res: Response) {
 
 		let data = differentiateRecords(response);
 
-		res.status(200).json({ ...data });
+		res.status(200).json([...data]);
 	} catch (error) {
 		logging.error('controllers/recordController', `Server error`, error);
 		res.status(500).json({
@@ -65,7 +65,7 @@ async function getFilteredRecords(req: Request, res: Response) {
 
 		let data = prepareForChart(preFinals, sensorMap);
 
-		res.status(200).json({ ...data });
+		res.status(200).json([...data]);
 	} catch (error) {
 		logging.error('controllers/recordController', `Server error`, error);
 		res.status(500).json({

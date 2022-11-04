@@ -12,7 +12,7 @@ import { Form } from './components/form/Form';
 import { registerReducer } from './reducers/registerReducer';
 import { INITIAL } from './models/registerReducerModel';
 import axios from 'axios';
-import { Loader } from '../../components/ui/Loader';
+import { Loader } from '../../components/Loader';
 
 function Register() {
 	const [modalOpen, setModalOpen] = useState(false);

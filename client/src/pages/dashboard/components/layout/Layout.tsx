@@ -22,7 +22,7 @@ const navList = (
 					key={ulOptions.indexOf(option)}
 					className="p-2"
 				>
-					<Typography variant="sm" as="li" color="black">
+					<Typography variant="small" as="li" color="black">
 						{option.name}
 					</Typography>
 				</Link>
@@ -84,21 +84,16 @@ function Layout() {
 						</ul>
 					</aside>
 					<article className="flex-grow flex flex-col gap-2 lg:gap-4">
-						<div className="hidden lg:block w-full h-36" />
+						<div className="hidden lg:block w-full h-36 min-h-[8rem]" />
 						<Navbar
 							className="mx-auto py-2 px-4 rounded-2xl lg:hidden"
 							fullWidth={true}
 						>
 							<div className="container mx-auto flex items-center justify-between text-blue-gray-900">
-								<Typography
-									as="a"
-									href="#"
-									variant="small"
-									className="mr-4 cursor-pointer py-1.5 font-normal"
-								>
+								<div className="mr-4 cursor-pointer py-1.5 font-normal">
 									<Avatar src={brand} size="md" />
 									<Link to="/">MaR</Link>
-								</Typography>
+								</div>
 								<div className="hidden lg:block">{navList}</div>
 								<IconButton
 									variant="text"

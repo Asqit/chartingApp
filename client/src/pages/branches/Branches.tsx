@@ -1,22 +1,11 @@
-import { useEffect, useReducer } from 'react';
+import { Button, Typography } from '@material-tailwind/react';
+import { useEffect, useReducer, useCallback } from 'react';
 import axios from 'axios';
 import { fetchBranchesReducer } from './reducers/fetchBranchesReducer';
 import { INITIAL } from './models/fetchBranchesModel';
-import { Loader } from '../../components/ui/Loader';
-import { BranchTable } from './components/branchTable/BranchTable';
-import {
-	Typography,
-	Input,
-	Button,
-	Tooltip,
-	Tabs,
-	TabsHeader,
-	TabsBody,
-	Tab,
-	TabPanel,
-} from '@material-tailwind/react';
+import { Loader } from '../../components/Loader';
+import { ErrorModal } from '../../components/ErrorModal';
 import { BranchCard } from './components/branchCard/BranchCard';
-import sampleMap from '../../assets/images/sample.png';
 
 function Branches() {
 	const [{ loading, error, payload }, dispatch] = useReducer(
@@ -24,10 +13,8 @@ function Branches() {
 		INITIAL
 	);
 
-	useEffect(() => {
+	const handleFetch = useCallback(() => {
 		dispatch({ type: 'FETCH_START' });
-		const baseUrl = process.env.REACT_APP_API;
-
 		axios
 			.get(`/api/branches/`)
 			.then((resp) => {
@@ -45,6 +32,9 @@ function Branches() {
 			});
 	}, []);
 
+	useEffect(() => handleFetch, [handleFetch]);
+
+	//====================================[BODY]===================================//
 	if (loading) {
 		return <Loader />;
 	}
@@ -58,91 +48,26 @@ function Branches() {
 						Zde je výpis všech v současnosti podporovaných poboček
 					</Typography>
 				</div>
-				<div className="flex gap-2">
-					<Tooltip content="Funkce zatím není implementována">
-						<Input label="Vyhledat pobočku" color="teal" />
-					</Tooltip>
-					<Button
-						color="teal"
-						className="shadow-none hover:shadow-none"
-					>
-						hledej!
-					</Button>
-				</div>
 			</article>
-			<div>
-				<Tabs value="list">
-					<TabsHeader>
-						<Tab key={'map'} value={'map'}>
-							Kartičky
-						</Tab>
-						<Tab key={'list'} value={'list'}>
-							List
-						</Tab>
-					</TabsHeader>
-					<TabsBody
-						animate={{
-							mount: { y: 0 },
-							unmount: { y: 250 },
-						}}
-					>
-						<TabPanel value={'map'} key="map" className="max-w-min">
-							<div className="flex w-full h-full">
-								<div className="w-[45%]">
-									{payload
-										? payload.map((record) => {
-												return (
-													<BranchCard {...record} />
-												);
-										  })
-										: null}
-									{payload
-										? payload.map((record) => {
-												return (
-													<BranchCard {...record} />
-												);
-										  })
-										: null}
-									{payload
-										? payload.map((record) => {
-												return (
-													<BranchCard {...record} />
-												);
-										  })
-										: null}
-
-									{!payload ? (
-										<div className="w-full h-full flex flex-col items-center justify-center">
-											<Typography variant="h4">
-												Chyba
-											</Typography>
-											<Typography variant="paragraph">
-												Nebyly nalezeny žádné pobočky
-											</Typography>
-										</div>
-									) : null}
-								</div>
-								<img
-									src={sampleMap}
-									alt="google map"
-									className="w-[45%] border border-red-500 object-cover rounded-2xl"
-								/>
-							</div>
-						</TabPanel>
-						<TabPanel value={'list'} key="list">
-							{payload ? <BranchTable cells={payload} /> : null}
-							{!payload ? (
-								<div className="w-full h-full flex flex-col items-center justify-center">
-									<Typography variant="h4">Chyba</Typography>
-									<Typography variant="paragraph">
-										Nebyly nalezeny žádné pobočky
-									</Typography>
-								</div>
-							) : null}
-						</TabPanel>
-					</TabsBody>
-				</Tabs>
+			<div className="flex-grow flex gap-2 justify-center items-center flex-row flex-wrap border shadow-sm rounded-2xl p-2">
+				{payload
+					? payload.map((branch, id) => {
+							return <BranchCard {...branch} key={id} />;
+					  })
+					: null}
+				{!payload ? (
+					<div className="text-center">
+						<Typography variant="h2">žádné pobočky</Typography>
+						<Typography>
+							Bohužel jsme nenašly, žádné pobočky.
+						</Typography>
+						<Button color="teal" onClick={handleFetch}>
+							Opakovat
+						</Button>
+					</div>
+				) : null}
 			</div>
+			{error ? <ErrorModal open={true} error={String(error)} /> : null}
 		</section>
 	);
 }

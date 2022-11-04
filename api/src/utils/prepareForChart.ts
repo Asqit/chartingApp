@@ -22,9 +22,7 @@ function prepareForChart(
 			currentSensor.minimum = cornerValues.min;
 			currentSensor.maximum = cornerValues.max;
 
-			currentSensor.chartColor = getChartColor(
-				getProperType(record.type)
-			);
+			currentSensor.chartColor = getChartColor(record.type);
 
 			let sensorName = getSensorName(sensorMap, currentSensor.location);
 

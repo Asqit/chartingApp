@@ -1,5 +1,5 @@
 import { Form } from './components/form/Form';
-import { useReducer } from 'react';
+import { useContext, useReducer } from 'react';
 import { loginReducer } from './reducers/loginReducer';
 import { INITIAL } from './models/loginReducerModel';
 import { Typography } from '@material-tailwind/react';
@@ -7,8 +7,10 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Loader } from '../../components/Loader';
 import { ErrorModal } from '../../components/ErrorModal';
+import { UserContext } from '../../context/userContext/userContext';
 
 function Login() {
+	const { setUser } = useContext(UserContext);
 	const [{ loading, error, payload }, dispatch] = useReducer(
 		loginReducer,
 		INITIAL
@@ -27,6 +29,9 @@ function Login() {
 			})
 			.then((resp) => {
 				dispatch({ type: 'LOGIN_SUCCESS', payload: resp.data });
+
+				setUser(resp.data);
+
 				return redirect('/dashboard');
 			})
 			.catch((err) => {

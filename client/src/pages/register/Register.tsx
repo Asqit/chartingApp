@@ -6,16 +6,19 @@ import {
 	DialogHeader,
 	DialogFooter,
 } from '@material-tailwind/react';
-import { Link } from 'react-router-dom';
-import { useReducer, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useContext, useReducer, useState } from 'react';
 import { Form } from './components/form/Form';
 import { registerReducer } from './reducers/registerReducer';
 import { INITIAL } from './models/registerReducerModel';
 import axios from 'axios';
 import { Loader } from '../../components/Loader';
+import { UserContext } from '../../context/userContext/userContext';
 
 function Register() {
+	const { setUser } = useContext(UserContext);
 	const [modalOpen, setModalOpen] = useState(false);
+	const redirect = useNavigate();
 	const modalHandler = () => setModalOpen(!modalOpen);
 	const [{ loading, error, payload }, dispatch] = useReducer(
 		registerReducer,
@@ -32,7 +35,10 @@ function Register() {
 		axios
 			.post(`${baseUrl}/account/register`, { username, email, password })
 			.then((resp) => {
+				setUser(resp.data);
 				dispatch({ type: 'REGISTER_SUCCESS', payload: resp.data });
+
+				return redirect('/dashboard');
 			})
 			.catch((err) => {
 				modalHandler();

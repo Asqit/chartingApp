@@ -4,6 +4,7 @@ import { createToken } from '../utils/createToken';
 import bcrypt from 'bcrypt';
 import { IViewUser } from '../types';
 import logging from '../config/logging';
+import { decode } from 'jsonwebtoken';
 
 async function register(req: Request, res: Response) {
 	try {
@@ -48,11 +49,17 @@ async function register(req: Request, res: Response) {
 
 		let token = createToken(tokenPayload);
 
-		res.cookie('accessToken', token, { httpOnly: true });
+		const TOKEN = Object(decode(token));
 
-		res.json({
-			message: 'OK',
-			accessToken: token,
+		res.cookie('accessToken', token, {
+			httpOnly: true,
+			maxAge: TOKEN.exp,
+		});
+
+		res.status(200).json({
+			username,
+			email,
+			token,
 		});
 	} catch (error) {
 		logging.error('controllers/accountController', `Server error`, error);
@@ -106,8 +113,9 @@ async function login(req: Request, res: Response) {
 		res.cookie('accessToken', token, { httpOnly: true });
 
 		res.status(200).json({
-			message: 'OK',
-			accessToken: token,
+			username: query.username,
+			email,
+			token,
 		});
 	} catch (error) {
 		logging.error('controllers/accountController', `Server error`, error);

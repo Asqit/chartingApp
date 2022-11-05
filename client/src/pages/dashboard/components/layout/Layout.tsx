@@ -12,26 +12,9 @@ import { useContext, useState } from 'react';
 import brand from '../../../../assets/brand/brand.svg';
 import { BsPerson } from 'react-icons/bs';
 import blobs from '../../../../assets/images/pattern_blobs.png';
+import { NavList } from '../NavList/NavList';
 
-const navList = (
-	<ul className="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
-		{ulOptions.map((option) => {
-			return (
-				<Link
-					to={option.to}
-					key={ulOptions.indexOf(option)}
-					className="p-2"
-				>
-					<Typography variant="small" as="li" color="black">
-						{option.name}
-					</Typography>
-				</Link>
-			);
-		})}
-	</ul>
-);
-
-function Layout() {
+function Layout({ logoutHandler }: { logoutHandler: () => void }) {
 	const [openNav, setOpenNav] = useState(false);
 	const { user } = useContext(UserContext);
 
@@ -62,8 +45,8 @@ function Layout() {
 								{user?.username ? user.username : 'Pan neznámý'}
 							</h1>
 							<button
-								className="text-emerald-500 hover:underline active:text-emerald-600"
-								onClick={() => {}}
+								className="text-teal-500 hover:underline active:text-teal-600"
+								onClick={logoutHandler}
 							>
 								odhlásit
 							</button>
@@ -94,7 +77,9 @@ function Layout() {
 									<Avatar src={brand} size="md" />
 									<Link to="/">MaR</Link>
 								</div>
-								<div className="hidden lg:block">{navList}</div>
+								<div className="hidden lg:block">
+									<NavList />
+								</div>
 								<IconButton
 									variant="text"
 									className="ml-auto h-6 w-6 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden"
@@ -133,7 +118,9 @@ function Layout() {
 									)}
 								</IconButton>
 							</div>
-							<MobileNav open={openNav}>{navList}</MobileNav>
+							<MobileNav open={openNav}>
+								<NavList />
+							</MobileNav>
 						</Navbar>
 						<main className="flex-grow p-2 bg-white shadow-md rounded-2xl lg:rounded-none lg:shadow-none overflow-x-hidden lg:overflow-y-auto">
 							<Outlet />

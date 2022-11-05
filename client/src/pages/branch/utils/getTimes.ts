@@ -1,11 +1,11 @@
 function getToday() {
 	let today = new Date();
 
-	today.setHours(8, 0, 0);
+	today.setHours(8, 0);
 
-	let shiftStart = new Date(today).getTime();
+	let shiftStart = new Date(new Date(today).setHours(8, 0)).getTime();
 
-	let shiftEnd = new Date(today.setHours(23, 0, 0)).getTime();
+	let shiftEnd = new Date(today.setHours(23, 59, 0)).getTime();
 
 	return {
 		from: shiftStart,
@@ -14,19 +14,20 @@ function getToday() {
 }
 
 function getYesterday() {
-	let yesterday = new Date();
+	let shiftStart = new Date();
 
-	yesterday.setHours(8, 0, 0);
-	yesterday.setDate(yesterday.getDate() - 1);
+	shiftStart.setDate(shiftStart.getDate() - 1);
+	shiftStart.setHours(8, 0);
 
-	let shiftStart = yesterday.getTime();
+	let shiftEnd = new Date();
 
-	let shiftEnd = new Date(yesterday.setHours(23, 0, 0)).getTime();
+	shiftEnd.setDate(shiftEnd.getDate() - 1);
+	shiftEnd.setHours(23, 59, 0);
 
-	return {
-		from: shiftStart,
-		to: shiftEnd,
-	};
+	let from = shiftStart.getTime();
+	let to = shiftEnd.getTime();
+
+	return { from, to };
 }
 
 function getWeek() {
@@ -35,22 +36,25 @@ function getWeek() {
 
 	for (let i = 0; i <= 7; i++) {
 		let first = base.getDate() - base.getDay() + i;
-		let day = new Date(base.setDate(first)).getTime();
+		let day = new Date(base.setDate(first));
 
 		week.push(day);
 	}
 
-	return {
-		from: week[0],
-		to: week[6],
-	};
+	let from = week[0].setHours(8, 0);
+	let to = week[6].setHours(23, 59);
+
+	return { from, to };
 }
 
 function getMonth() {
 	let time = new Date();
 
-	let first = new Date(time.getFullYear(), time.getMonth(), 1).getTime();
-	let last = new Date(time.getFullYear(), time.getMonth() + 1, 0).getTime();
+	let first = new Date(time.getFullYear(), time.getMonth(), 1).setHours(8, 0);
+	let last = new Date(time.getFullYear(), time.getMonth() + 1, 0).setHours(
+		23,
+		59
+	);
 
 	return {
 		from: first,
@@ -58,4 +62,4 @@ function getMonth() {
 	};
 }
 
-export default { getToday, getYesterday, getMonth, getWeek };
+export const getTimes = { getToday, getYesterday, getMonth, getWeek };

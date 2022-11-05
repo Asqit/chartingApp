@@ -1,8 +1,11 @@
+// 3rd party components
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
+// Context providers
 import { DarkProvider } from './context/darkContext/DarkProvider';
 import { UserProvider } from './context/userContext/UserProvider';
-import axios, { AxiosRequestConfig } from 'axios';
 
+// Endpoints
 import { Dashboard } from './pages/dashboard/Dashboard';
 import { Homepage } from './pages/homapage/Homepage';
 import { Branches } from './pages/branches/Branches';
@@ -14,24 +17,6 @@ import { About } from './pages/about/About';
 import { Settings } from './pages/settings/Settings';
 import { Account } from './pages/account/Account';
 
-/*
-let apiUrl = process.env.REACT_APP_API;
-
-axios.interceptors.request.use(
-	(config: AxiosRequestConfig) => {
-		const { origin } = new URL(config.url!);
-		const allowedOrigins = [apiUrl];
-		const token = localStorage.getItem('token');
-		if (allowedOrigins.includes(origin) && config.headers) {
-			config.headers.authorization = `Bearer ${token}`;
-		}
-		return config;
-	},
-	(error) => {
-		return Promise.reject(error);
-	}
-);
-*/
 function App() {
 	return (
 		<UserProvider>

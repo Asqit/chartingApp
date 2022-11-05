@@ -27,9 +27,7 @@ const Chart: FC<IChart> = ({ data, color }) => {
 	return (
 		<ResponsiveContainer width="100%" height="100%">
 			<AreaChart data={data}>
-				<CartesianGrid />
 				<XAxis dataKey="time" />
-				<YAxis />
 				<Tooltip
 					content={
 						<CustomTooltip active={true} payload={[]} label={''} />

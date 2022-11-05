@@ -6,7 +6,7 @@ import { Loader } from '../../components/Loader';
 import { ErrorModal } from '../../components/ErrorModal';
 import axios from 'axios';
 import { Typography, Select, Option } from '@material-tailwind/react';
-import getTimes from './utils/getTimes';
+import { getTimes } from './utils/getTimes';
 import { TypeDivider } from './components/typeDivider/TypeDivider';
 
 function Branch() {

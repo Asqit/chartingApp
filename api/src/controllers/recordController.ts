@@ -3,6 +3,7 @@ import connector from '../config/connector';
 import { differentiateRecords } from '../utils/differentiateRecords';
 import { prepareForChart } from '../utils/prepareForChart';
 import { getSensorMap } from '../utils/getSensorMap';
+import moment from 'moment';
 import logging from '../config/logging';
 
 async function getRecord(req: Request, res: Response) {
@@ -48,8 +49,8 @@ async function getFilteredRecords(req: Request, res: Response) {
 	try {
 		const { branch, from, to, precise } = req.body;
 
-		const dateFrom = new Date(new Date().setTime(from)).toISOString();
-		const dateTo = new Date(new Date().setTime(to)).toISOString();
+		let dateFrom = moment(from).format('YYYY-MM-DD h-m-s');
+		let dateTo = moment(to).format('YYYY-MM-DD h-m-s');
 
 		const response = await connector.query(
 			'SELECT * FROM `Records` WHERE `branchId` = ? AND `time` >= ? AND `time` <= ? ORDER BY `time` ASC',

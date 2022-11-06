@@ -8,7 +8,7 @@ import {
 import { useState, FC, ReactNode } from 'react';
 
 export interface IErrorModal {
-	error: string;
+	error?: string;
 	open: boolean;
 	header?: string;
 	children?: ReactNode;
@@ -61,8 +61,13 @@ const ErrorModal: FC<IErrorModal> = ({
 			<DialogHeader>{header}</DialogHeader>
 			<DialogBody>{children ? children : error}</DialogBody>
 			<DialogFooter>
-				<Button onClick={handleNo}>ne</Button>
-				<Button onClick={handleYes}>ano</Button>
+				{onYes ? (
+					<>
+						<Button onClick={handleYes}>ano</Button>
+						<Button onClick={handleNo}>ne</Button>
+					</>
+				) : null}
+				{!onYes ? <Button onClick={modalHandler}>dobře</Button> : null}
 			</DialogFooter>
 		</Dialog>
 	);

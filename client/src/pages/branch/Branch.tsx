@@ -74,7 +74,7 @@ function Branch() {
 					<Typography variant="small">Adresa: {location}</Typography>
 					<Typography variant="small">Telefon: {phone}</Typography>
 				</article>
-				<div>
+				<div className="flex items-center md:flex-wrap gap-2">
 					<Select
 						label="Výběr dle datumu"
 						color="teal"

@@ -1,12 +1,12 @@
 import { useContext, useEffect, useState } from 'react';
 import { UserContext } from './context/userContext/userContext';
-import jwtDecode from 'jwt-decode';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 function useAuth() {
 	const redirect = useNavigate();
 	const [loading, setLoading] = useState(true);
+	const { setUser } = useContext(UserContext);
 
 	useEffect(() => {
 		(async () => {
@@ -16,7 +16,7 @@ function useAuth() {
 
 			setLoading(false);
 		})();
-	}, [redirect]);
+	}, [redirect, setUser]);
 
 	return loading;
 }

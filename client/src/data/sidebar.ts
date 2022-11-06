@@ -15,12 +15,6 @@ export const ulOptions = [
 	},
 
 	{
-		name: 'Nastavení',
-		to: 'settings',
-		icon: CiSettings,
-	},
-
-	{
 		name: 'O aplikaci',
 		to: 'about',
 		icon: BsInfoCircle,
@@ -28,10 +22,9 @@ export const ulOptions = [
 ];
 
 /**
- * {
-		name: 'Můj účet',
-		to: 'account',
-		icon: BsFillPersonFill,
-	},
- * 
+{
+	name: 'Nastavení',
+	to: 'settings',
+	icon: CiSettings,
+},
  */

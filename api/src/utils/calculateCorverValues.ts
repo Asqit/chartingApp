@@ -28,6 +28,11 @@ function calculateCornerValues(payload: IViewRecord[]): CornerValues {
 
 	avg /= PAYLOAD_LENGTH;
 
+	// rouding number to two deciman points e.g. 3.14
+	min = Math.round(min * 100) / 100;
+	avg = Math.round(avg * 100) / 100;
+	max = Math.round(max * 100) / 100;
+
 	return {
 		min,
 		avg,

@@ -7,7 +7,7 @@ import { SensorType } from '../types';
  * ### Description
  * So to ease client-side as much as possible I created this function, which basically evaluate color for each reacord type
  */
-function getChartColor(type: SensorType) {
+function getChartColor(type: SensorType | string) {
 	switch (type) {
 		case 'Teplota':
 			return '#df2e36';

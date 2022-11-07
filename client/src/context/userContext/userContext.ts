@@ -3,6 +3,7 @@ import { createContext } from 'react';
 export interface IUser {
 	username: string;
 	email: string;
+	token: string;
 }
 
 export interface IUserContext {

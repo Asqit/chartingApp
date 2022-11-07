@@ -2,6 +2,7 @@ import http from 'http';
 import express, { Request, Response, NextFunction } from 'express';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
+import path from 'path';
 
 // server config files
 import logging from './config/logging';
@@ -61,7 +62,7 @@ router.use((req: Request, res: Response, next: NextFunction) => {
 router.use('/api/account', accountRoute);
 router.use('/api/branches', branchRoute); // protected by JWT cookie
 router.use('/api/records', recordRoute); // protected by JWT cookie
-router.use('/api/', express.static('src/public/')); // serving either static index.html or transpilled version of client
+router.use('/', express.static(path.join(__dirname, '/public'))); // serving either static index.html or transpilled version of client
 
 // Unknown route handling -----------------------------------
 router.use((req, res) => {

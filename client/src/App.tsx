@@ -7,15 +7,17 @@ import { UserProvider } from './context/userContext/UserProvider';
 
 // Endpoints
 import { Dashboard } from './pages/dashboard/Dashboard';
-//import { Homepage } from './pages/homapage/Homepage';
 import { Branches } from './pages/branches/Branches';
 import { Branch } from './pages/branch/Branch';
 import { Lost } from './pages/lost/Lost';
 import { Login } from './pages/login/Login';
 import { Register } from './pages/register/Register';
 import { About } from './pages/about/About';
-//import { Settings } from './pages/settings/Settings';
 import { Account } from './pages/account/Account';
+
+// Temporary commenting these endpoints, since they have no use (atleast for now)
+//import { Homepage } from './pages/homapage/Homepage';
+//import { Settings } from './pages/settings/Settings';
 
 function App() {
 	return (

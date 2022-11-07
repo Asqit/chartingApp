@@ -1,8 +1,8 @@
 {
 	"name": "client",
-	"version": "0.1.0",
+	"version": "1.0.0",
 	"private": true,
-	"proxy": "http://localhost:8000",
+	"proxy": "http://localhost:8080",
 	"dependencies": {
 		"@material-tailwind/react": "^1.2.4",
 		"@testing-library/jest-dom": "^5.14.1",

@@ -68,7 +68,7 @@ function Branch() {
 
 	return (
 		<section className="w-full h-full">
-			<div className="flex justify-between">
+			<div className="flex flex-col gap-2 md:flex-row md:justify-between md:gap-0">
 				<article>
 					<Typography variant="h2">{name}</Typography>
 					<Typography variant="small">Adresa: {location}</Typography>

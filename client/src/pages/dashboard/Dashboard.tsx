@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { Layout } from './components/layout/Layout';
 import axios from 'axios';
 import { Loader } from '../../components/Loader';
-import { useAuth } from '../../useAuth';
+import { useAuth } from '../../hooks/useAuth';
 
 function Dashboard() {
 	const loading = useAuth();

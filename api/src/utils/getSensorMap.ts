@@ -1,4 +1,4 @@
-import connector from '../config/connector';
+import connector from '../config/mariaConnector';
 
 async function getSensorMap(branchId: number) {
 	const map = await connector.query(

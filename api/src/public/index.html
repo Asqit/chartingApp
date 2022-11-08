@@ -21,10 +21,29 @@
 				font-weight: 700;
 				margin: 0.5rem 0;
 			}
+			div {
+				padding: 2rem;
+				border-radius: 0.5rem;
+				border: 2px solid rgb(5, 196, 78);
+			}
+			ul {
+				list-style-type: none;
+				margin: 0.5rem 0;
+			}
 		</style>
 	</head>
 	<body>
-		<h1>Hello world!</h1>
-		<p>This message was server by my API</p>
+		<div>
+			<h1>Hello world!</h1>
+			<p>This message was server by my API</p>
+			<details>
+				<summary>Avaible endpoints</summary>
+				<ul>
+					<li>/branches</li>
+					<li>/account</li>
+					<li>/records</li>
+				</ul>
+			</details>
+		</div>
 	</body>
 </html>

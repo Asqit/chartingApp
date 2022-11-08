@@ -12,14 +12,14 @@ export interface ISidebar {
 }
 
 const Sidebar: FC<ISidebar> = ({ user, logoutHandler }) => (
-	<aside className="hidden bg-white border-r md:block md:w-1/3 md:min-w-[220px] md:max-w-[280px] lg:min-w-[280px] lg:w-1/3 lg:max-w-sm  lg:rounded-2xl lg:shadow-md">
+	<aside className="hidden bg-white dark:bg-blue-gray-800 dark:text-white dark:border-none dark:shadow-none border-r md:block md:w-1/3 md:min-w-[220px] md:max-w-[280px] lg:min-w-[280px] lg:w-1/3 lg:max-w-sm  lg:rounded-2xl lg:shadow-md">
 		<div className="w-full px-4 py-4 text-center flex items-center justify-center">
 			<Avatar src={brand} size="md" />
 			<Typography
 				variant="h4"
 				className="mr-4 cursor-pointer py-1.5 font-bold"
 			>
-				<Link to="/">MaR</Link>
+				<Link to="/dashboard">MaR</Link>
 			</Typography>
 		</div>
 		<div className="w-full px-4 py-5 flex flex-col items-center">
@@ -42,7 +42,7 @@ const Sidebar: FC<ISidebar> = ({ user, logoutHandler }) => (
 					<Link
 						to={option.to}
 						key={ulOptions.indexOf(option)}
-						className="w-1/2 mx-auto my-4 flex items-center gap-4 font-medium transition-all hover:gap-5"
+						className="w-1/2 mx-auto my-4 flex items-center gap-4 font-medium transition-all hover:gap-5 hover:text-teal-500"
 					>
 						<option.icon />
 						<span>{option.name}</span>

@@ -2,7 +2,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 // Context providers
-import { DarkProvider } from './context/darkContext/DarkProvider';
 import { UserProvider } from './context/userContext/UserProvider';
 
 // Endpoints
@@ -17,27 +16,26 @@ import { Account } from './pages/account/Account';
 
 // Temporary commenting these endpoints, since they have no use (atleast for now)
 //import { Homepage } from './pages/homapage/Homepage';
-//import { Settings } from './pages/settings/Settings';
+import { Settings } from './pages/settings/Settings';
 
 function App() {
 	return (
 		<UserProvider>
-			<DarkProvider>
-				<BrowserRouter>
-					<Routes>
-						<Route path="*" element={<Lost />} />
-						<Route path="/" element={<Login />} />
-						<Route path="/register" element={<Register />} />
-						<Route path="/login" element={<Login />} />
-						<Route path="/dashboard" element={<Dashboard />}>
-							<Route path="branches" element={<Branches />} />
-							<Route path="branches/:id" element={<Branch />} />
-							<Route path="about" element={<About />} />
-							<Route path="account" element={<Account />} />
-						</Route>
-					</Routes>
-				</BrowserRouter>
-			</DarkProvider>
+			<BrowserRouter>
+				<Routes>
+					<Route path="*" element={<Lost />} />
+					<Route path="/" element={<Login />} />
+					<Route path="/register" element={<Register />} />
+					<Route path="/login" element={<Login />} />
+					<Route path="/dashboard" element={<Dashboard />}>
+						<Route path="branches" element={<Branches />} />
+						<Route path="branches/:id" element={<Branch />} />
+						<Route path="about" element={<About />} />
+						<Route path="settings" element={<Settings />} />
+						<Route path="account" element={<Account />} />
+					</Route>
+				</Routes>
+			</BrowserRouter>
 		</UserProvider>
 	);
 }

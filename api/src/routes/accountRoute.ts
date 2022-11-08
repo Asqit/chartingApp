@@ -13,9 +13,7 @@ router.get(
 		getToken: (req: Request) => req.cookies.accessToken,
 		algorithms: ['HS512'],
 	}),
-	(req: Request, res: Response) => {
-		res.status(200).json({ message: 'OK' });
-	}
+	controller.active
 );
 
 router.delete(

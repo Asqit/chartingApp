@@ -8,9 +8,11 @@ import {
 	DialogBody,
 	DialogFooter,
 } from '@material-tailwind/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useDarkMode } from '../../hooks/useDark';
 
 function Settings() {
+	const [isDark, setIsDark] = useDarkMode();
 	const [modalOpen, setModalOpen] = useState(false);
 	const handleModal = () => setModalOpen(!modalOpen);
 
@@ -21,7 +23,11 @@ function Settings() {
 				<div className="flex flex-wrap justify-evenly items-center gap-8">
 					<div className="w-full border shadow-sm rounded-2xl flex justify-between items-center p-2">
 						<Typography>Temný režim</Typography>
-						<Switch color="teal" />
+						<Switch
+							color="teal"
+							defaultChecked={isDark}
+							onClick={(e: any) => setIsDark(e.target.checked)}
+						/>
 					</div>
 					<div className="w-full border shadow-sm rounded-2xl flex justify-between items-center p-2">
 						<Typography>Smazání účtu</Typography>

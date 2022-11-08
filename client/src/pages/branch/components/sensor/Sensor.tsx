@@ -4,7 +4,7 @@ import { Chart } from '../chart/Chart';
 
 function Sensor(parameters: IViewSensor) {
 	return (
-		<section className="border p-2 rounded-2xl my-2">
+		<section className="p-2 rounded-2xl bg-gray-100">
 			<div className="flex flex-col">
 				<Typography variant="lead" className="text-center">
 					{parameters.location}
@@ -16,8 +16,8 @@ function Sensor(parameters: IViewSensor) {
 					/>
 				</figure>
 				<ul className="flex gap-2 justify-center">
-					<li>Průměr {parameters.average}</li>
 					<li>Minimum {parameters.minimum}</li>
+					<li>Průměr {parameters.average}</li>
 					<li>Maximum {parameters.maximum}</li>
 				</ul>
 			</div>

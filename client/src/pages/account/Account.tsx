@@ -12,9 +12,13 @@ function Account() {
 				<Typography variant="paragraph">
 					Zde jsou všechny mimotechnické údaje o vašem účtu
 				</Typography>
-				<ul>
-					<li>Uživatelské jméno: {user?.username || 'Neznámý'}</li>
-					<li>Emailová adresa: {user?.email || 'Neznámý'}</li>
+				<ul className="my-2 md:my-4">
+					<li>
+						<b>Uživatelské jméno:</b> {user?.username || 'Neznámý'}
+					</li>
+					<li>
+						<b>Emailová adresa:</b> {user?.email || 'Neznámý'}
+					</li>
 				</ul>
 			</article>
 		</section>

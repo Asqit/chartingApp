@@ -40,7 +40,7 @@ router.use((req, res, next) => {
 router.use(express.urlencoded({ extended: true })); // learning express about String, Array
 router.use(express.json()); // learning express about JSON
 router.use(cookieParser()); // learning express about cookies
-router.use(cors());
+router.use(cors()); // cross-site policy
 
 // setting rules of the API -----------------------------------
 router.use((req: Request, res: Response, next: NextFunction) => {

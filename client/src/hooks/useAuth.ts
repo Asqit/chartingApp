@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { UserContext } from './context/userContext/userContext';
+import { UserContext } from '../context/userContext/userContext';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -10,9 +10,14 @@ function useAuth() {
 
 	useEffect(() => {
 		(async () => {
-			axios.get('/api/account/active').catch((err) => {
-				return redirect('/login');
-			});
+			axios
+				.get('/api/account/active')
+				.then((resp) => {
+					setUser(resp.data);
+				})
+				.catch((err) => {
+					return redirect('/login');
+				});
 
 			setLoading(false);
 		})();

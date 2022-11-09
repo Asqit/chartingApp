@@ -15,8 +15,8 @@ import { About } from './pages/about/About';
 import { Account } from './pages/account/Account';
 
 // Temporary commenting these endpoints, since they have no use (atleast for now)
-//import { Homepage } from './pages/homapage/Homepage';
-import { Settings } from './pages/settings/Settings';
+// import { Homepage } from './pages/homapage/Homepage';
+// import { Settings } from './pages/settings/Settings';
 
 function App() {
 	return (
@@ -24,14 +24,13 @@ function App() {
 			<BrowserRouter>
 				<Routes>
 					<Route path="*" element={<Lost />} />
-					<Route path="/" element={<Login />} />
+					<Route path="/" element={<Dashboard />} />
 					<Route path="/register" element={<Register />} />
 					<Route path="/login" element={<Login />} />
 					<Route path="/dashboard" element={<Dashboard />}>
 						<Route path="branches" element={<Branches />} />
 						<Route path="branches/:id" element={<Branch />} />
 						<Route path="about" element={<About />} />
-						<Route path="settings" element={<Settings />} />
 						<Route path="account" element={<Account />} />
 					</Route>
 				</Routes>

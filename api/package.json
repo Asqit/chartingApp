@@ -3,13 +3,18 @@
 	"version": "1.0.0",
 	"description": "this is REST api for my MaR application ",
 	"main": "/src/server.ts",
-	"author": "Ondřej Tuček",
+	"author": {
+		"name": "Ondřej Tuček",
+		"email": "ondrejtucek9@gmail.com",
+		"url": "https://www.ondrejtucek.netlify.app"
+	},
 	"license": "MIT",
 	"private": true,
 	"scripts": {
-		"dev": "nodemon ./src/server.ts",
 		"init": "yarn prisma db pull && yarn prisma generate",
-		"start": "node ./dist/server.js"
+		"dev": "nodemon ./src/server.ts",
+		"start": "node ./dist/server.js",
+		"build": "tsc --build"
 	},
 	"dependencies": {
 		"@prisma/client": "^4.5.0",

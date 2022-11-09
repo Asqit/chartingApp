@@ -109,6 +109,7 @@ export interface IViewRecords {
 export interface IViewUser {
 	username: string;
 	email: string;
+	token?: string; // <-- is usually sent, but its optional cuz of my lazy ass (don't wanna fix typos)
 }
 
 export interface IViewBranch extends IModelBranch {}

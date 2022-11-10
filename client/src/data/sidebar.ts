@@ -19,6 +19,11 @@ export const ulOptions = [
 		to: 'about',
 		icon: BsInfoCircle,
 	},
+	{
+		name: 'Nastavení',
+		to: 'settings',
+		icon: CiSettings,
+	},
 ];
 
 /**

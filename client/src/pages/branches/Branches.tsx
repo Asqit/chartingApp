@@ -40,7 +40,7 @@ function Branches() {
 	}
 
 	return (
-		<section className="w-full h-full flex flex-col">
+		<section className="w-full h-full flex flex-col dark:text-gray-400 p-4">
 			<article className="p-1 my-2 flex items-center justify-between">
 				<div>
 					<Typography variant="h2">Pobočky</Typography>
@@ -49,7 +49,7 @@ function Branches() {
 					</Typography>
 				</div>
 			</article>
-			<div className="flex-grow flex gap-2 justify-center items-center flex-row flex-wrap border shadow-sm rounded-2xl p-2">
+			<div className="flex-grow flex gap-2 justify-center items-center flex-row flex-wrap border dark:border-gray-400 shadow-sm rounded-2xl p-2">
 				{payload
 					? payload.map((branch, id) => {
 							return <BranchCard {...branch} key={id} />;

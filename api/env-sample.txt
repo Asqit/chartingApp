@@ -8,6 +8,7 @@ DB_PORT="3306"
 DB_USER="joedoe"
 DB_PWD="password123"
 DB="myDb"
+DB_ERROR_TRACE="true"
 
 # Server email
 SMTP_USER="joedoe@email.com"

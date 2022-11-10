@@ -2,10 +2,10 @@ import { Tooltip, Typography } from '@material-tailwind/react';
 
 function About() {
 	return (
-		<section className="w-full h-full">
+		<section className="w-full h-full p-4 dark:text-gray-400">
 			<article className="container max-w-4xl">
 				<Typography variant="h2">Měření a Regulace</Typography>
-				<Typography variant="paragraph">
+				<Typography variant="small" className="my-2">
 					MaR nebo také Měření a Regulace je webová aplikace, která má
 					za úkol zpřehlednit vaše data. Aplikace je tvořená ze
 					čtyřech částí. První část tvoří webová aplikace, právě ta,
@@ -16,14 +16,26 @@ function About() {
 				</Typography>
 				<ul>
 					<li>
-						<Tooltip content="6.6.2022">
+						<Tooltip
+							content="10.11.2022"
+							animate={{
+								mount: { scale: 1, y: 0 },
+								unmount: { scale: 0, y: 25 },
+							}}
+						>
 							<span>
-								<b>Verze: </b>1.0.0
+								<b>Verze: </b>1.1.0
 							</span>
 						</Tooltip>
 					</li>
 					<li>
-						<b>Web & API:</b> Ondřej Tuček
+						<b>Web & API:</b>{' '}
+						<a
+							href="https://ondrejtucek.netlify.app"
+							className="hover:text-teal-500"
+						>
+							Ondřej Tuček
+						</a>
 					</li>
 					<li>
 						<b>IoT/HW:</b> Tomáš Tuček

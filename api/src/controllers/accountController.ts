@@ -103,6 +103,7 @@ async function login(req: Request, res: Response) {
 			return;
 		}
 
+		// All good here, so we just prepare `IViewModel` and set cookie-header
 		let tokenPayload: IViewUser = {
 			username: query.username,
 			email: query.email!,
@@ -125,4 +126,25 @@ async function login(req: Request, res: Response) {
 	}
 }
 
-export default { login, register };
+/**
+ * **active:** This endpoint serves only to sent `IViewUser` to client.
+ *
+ * **note:** no verification is needed, since there is a middleware before, that does exactly that.
+ *
+ * see `/routes/accountRoute.ts`
+ */
+async function active(req: Request, res: Response) {
+	try {
+		const TOKEN = req.cookies.accessToken;
+
+		const user = Object(decode(TOKEN));
+
+		res.status(200).json({
+			username: user.username,
+			email: user.email,
+			token: TOKEN,
+		});
+	} catch (err) {}
+}
+
+export default { login, register, active };

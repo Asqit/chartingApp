@@ -13,8 +13,11 @@ const Header = () => {
 	const [openNav, setOpenNav] = useState(false);
 
 	return (
-		<Navbar className="mx-auto py-2 px-4 md:hidden" fullWidth={true}>
-			<div className="container mx-auto flex items-center justify-between text-blue-gray-900">
+		<Navbar
+			className="mx-auto py-2 px-4 md:hidden bg-white dark:bg-blue-gray-800 border-none"
+			fullWidth={true}
+		>
+			<div className="container mx-auto flex items-center justify-between text-blue-gray-900 dark:text-white">
 				<div className="mr-4 cursor-pointer py-1.5 font-normal">
 					<Avatar src={brand} size="md" />
 					<Link to="/">MaR</Link>

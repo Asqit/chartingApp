@@ -59,7 +59,7 @@ function Register() {
 
 	return (
 		<>
-			<section className="w-full flex h-screen">
+			<section className="w-full flex h-screen dark:bg-blue-gray-800 dark:text-gray-400">
 				<figure className="hidden h-full lg:block w-auto flex-grow bg-gradient-to-bl from-teal-500 to-yellow-400" />
 				<main className="w-full flex flex-col items-center justify-center lg:min-w-[480px] lg:w-1/3 lg:max-w-lg">
 					<article>

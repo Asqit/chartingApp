@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import connector from '../config/connector';
+import connector from '../config/mariaConnector';
 import logging from '../config/logging';
 
 async function getBranch(req: Request, res: Response) {

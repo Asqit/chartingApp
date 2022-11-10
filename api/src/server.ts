@@ -40,16 +40,15 @@ router.use((req, res, next) => {
 router.use(express.urlencoded({ extended: true })); // learning express about String, Array
 router.use(express.json()); // learning express about JSON
 router.use(cookieParser()); // learning express about cookies
-router.use(cors());
+router.use(cors()); // cross-site policy
 
 // setting rules of the API -----------------------------------
 router.use((req: Request, res: Response, next: NextFunction) => {
-	res.header('Access-Control-Allow-Origin', '*');
+	res.header('Access-Control-Allow-Origin', '*'); // TODO: requires changes before release
 	res.header(
 		'Access-Controll-Allow-Headers',
 		'Origin, X-Requester-With, Content-Type, Accept, Authorization'
 	);
-	//  res.header('Access-Control-Allow-Credentials', true)
 	if (req.method == 'OPTIONS') {
 		res.header('Access-Control-Allow-Methods', 'GET PATCH DELETE POST PUT');
 		return res.status(200).json({});
@@ -58,11 +57,15 @@ router.use((req: Request, res: Response, next: NextFunction) => {
 	next();
 });
 
-// serving routes -----------------------------------
+// serving endpoints -----------------------------------
 router.use('/api/account', accountRoute);
 router.use('/api/branches', branchRoute); // protected by JWT cookie
 router.use('/api/records', recordRoute); // protected by JWT cookie
 router.use('/', express.static(path.join(__dirname, '/public'))); // serving either static index.html or transpilled version of client
+
+// hiding api informations
+router.disable('X-Powered-By');
+router.disable('x-powered-by');
 
 // Unknown route handling -----------------------------------
 router.use((req, res) => {

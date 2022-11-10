@@ -16,7 +16,10 @@ export interface IBranchCard {
 
 const BranchCard: FC<IBranchCard> = ({ id, name, location, phone }) => {
 	return (
-		<Card className="w-64 border" shadow={false}>
+		<Card
+			className="w-64 border dark:bg-blue-gray-800 dark:text-gray-400 dark:border-gray-400"
+			shadow={false}
+		>
 			<CardBody className="text-center">
 				<Typography variant="h5" className="mb-2">
 					{name}

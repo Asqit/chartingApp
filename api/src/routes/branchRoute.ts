@@ -14,6 +14,7 @@ router.get(
 	}),
 	controller.getBranch
 );
+
 router.get(
 	'/',
 	expressjwt({

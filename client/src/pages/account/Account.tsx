@@ -6,18 +6,20 @@ function Account() {
 	const { user } = useContext(UserContext);
 
 	return (
-		<section>
-			<article>
-				<Typography variant="h2">Váš účet</Typography>
-				<Typography variant="paragraph">
-					Zde jsou všechny mimotechnické údaje o vašem účtu
-				</Typography>
-				<ul>
-					<li>Uživatelské jméno: {user?.username || 'Neznámý'}</li>
-					<li>Emailová adresa: {user?.email || 'Neznámý'}</li>
-				</ul>
-			</article>
-		</section>
+		<article className="w-full h-full p-4 dark:text-gray-400">
+			<Typography variant="h2">Váš účet</Typography>
+			<Typography variant="paragraph">
+				Zde jsou všechny mimotechnické údaje o vašem účtu
+			</Typography>
+			<ul className="my-2 md:my-4">
+				<li>
+					<b>Uživatelské jméno:</b> {user?.username || 'Neznámý'}
+				</li>
+				<li>
+					<b>Emailová adresa:</b> {user?.email || 'Neznámý'}
+				</li>
+			</ul>
+		</article>
 	);
 }
 

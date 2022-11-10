@@ -26,7 +26,7 @@ export interface ICustomTooltip {
 const CustomTooltip: FC<ICustomTooltip> = ({ active, payload, label }) => {
 	if (active && payload && payload.length) {
 		return (
-			<div className="bg-white p-2 rounded-md">
+			<div className="bg-white dark:bg-blue-gray-700 p-2 rounded-md">
 				<Typography>Hodnota: {payload[0].value}</Typography>
 				<Typography>
 					Čas: {new Date(label!).toLocaleString()}

@@ -2,7 +2,7 @@ import { Tooltip, Typography } from '@material-tailwind/react';
 
 function About() {
 	return (
-		<section className="w-full h-full">
+		<section className="w-full h-full p-4 dark:text-gray-400">
 			<article className="container max-w-4xl">
 				<Typography variant="h2">Měření a Regulace</Typography>
 				<Typography variant="small" className="my-2">

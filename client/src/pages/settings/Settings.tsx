@@ -1,72 +1,25 @@
-import {
-	Typography,
-	Button,
-	Tooltip,
-	Switch,
-	Dialog,
-	DialogHeader,
-	DialogBody,
-	DialogFooter,
-} from '@material-tailwind/react';
-import { useEffect, useState } from 'react';
+import { Typography, Switch } from '@material-tailwind/react';
 import { useDarkMode } from '../../hooks/useDark';
 
 function Settings() {
 	const [isDark, setIsDark] = useDarkMode();
-	const [modalOpen, setModalOpen] = useState(false);
-	const handleModal = () => setModalOpen(!modalOpen);
 
 	return (
-		<section>
-			<article>
-				<Typography variant="h2">Nastavení</Typography>
-				<div className="flex flex-wrap justify-evenly items-center gap-8">
-					<div className="w-full border shadow-sm rounded-2xl flex justify-between items-center p-2">
-						<Typography>Temný režim</Typography>
-						<Switch
-							color="teal"
-							defaultChecked={isDark}
-							onClick={(e: any) => setIsDark(e.target.checked)}
-						/>
-					</div>
-					<div className="w-full border shadow-sm rounded-2xl flex justify-between items-center p-2">
-						<Typography>Smazání účtu</Typography>
-						<Tooltip content="Pozor:Tato akce nelze vrátit">
-							<Button
-								color="red"
-								variant="outlined"
-								onClick={handleModal}
-							>
-								smazat
-							</Button>
-						</Tooltip>
-						<Dialog open={modalOpen} handler={handleModal}>
-							<DialogHeader>Pozor</DialogHeader>
-							<DialogBody divider>
-								Tato akce se nedá odvolat. Jste si jistý ?
-							</DialogBody>
-							<DialogFooter>
-								<Button
-									variant="text"
-									color="red"
-									onClick={handleModal}
-									className="mr-1"
-								>
-									<span>ne</span>
-								</Button>
-								<Button
-									variant="gradient"
-									color="green"
-									onClick={handleModal}
-								>
-									<span>ano</span>
-								</Button>
-							</DialogFooter>
-						</Dialog>
-					</div>
+		<article className="w-full h-full dark:text-gray-400 p-4">
+			<Typography variant="h2">Nastavení</Typography>
+			<div className="flex flex-wrap justify-evenly items-center gap-2 bg-white dark:bg-blue-gray-800 rounded-md">
+				<div className="w-full flex justify-between items-center p-2">
+					<Typography className="lead dark:text-gray-300">
+						Temný režim
+					</Typography>
+					<Switch
+						color="teal"
+						defaultChecked={isDark}
+						onClick={(e: any) => setIsDark(e.target.checked)}
+					/>
 				</div>
-			</article>
-		</section>
+			</div>
+		</article>
 	);
 }
 

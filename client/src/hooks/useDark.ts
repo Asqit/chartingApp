@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { usePrefersDarkMode } from './usePrefersDarkMode';
 import { useSafeLocalStorage } from './useSafeLocalStorage';
 
-export function useDarkMode() {
+function useDarkMode() {
 	const prefersDarkMode = usePrefersDarkMode();
 	const [isEnabled, setIsEnabled] = useSafeLocalStorage(
 		'dark-mode',
@@ -20,3 +20,5 @@ export function useDarkMode() {
 
 	return [enabled, setIsEnabled];
 }
+
+export { useDarkMode };

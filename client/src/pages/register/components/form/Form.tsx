@@ -79,6 +79,7 @@ const Form: FC<IForm> = ({ onSubmit }) => {
 				color="teal"
 				type="text"
 				label="Tvé uživatelské jméno"
+				className="focus:text-gray-300"
 				name="username"
 				error={inputs.emailError}
 				onChange={handleChange}
@@ -89,6 +90,7 @@ const Form: FC<IForm> = ({ onSubmit }) => {
 				color="teal"
 				type="email"
 				label="Zadejte email"
+				className="focus:text-gray-300"
 				name="email"
 				error={inputs.emailError}
 				onChange={handleChange}
@@ -99,6 +101,7 @@ const Form: FC<IForm> = ({ onSubmit }) => {
 				color="teal"
 				type={`${revealed ? 'text' : 'password'}`}
 				label="Zadejte heslo"
+				className="focus:text-gray-300"
 				name="password"
 				error={inputs.passwordError}
 				onChange={handleChange}

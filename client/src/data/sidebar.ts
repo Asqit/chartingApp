@@ -1,5 +1,5 @@
 import { BsBuilding, BsPerson, BsInfoCircle } from 'react-icons/bs';
-//import { CiSettings } from 'react-icons/ci';
+import { CiSettings } from 'react-icons/ci';
 
 export const ulOptions = [
 	{
@@ -18,6 +18,11 @@ export const ulOptions = [
 		name: 'O aplikaci',
 		to: 'about',
 		icon: BsInfoCircle,
+	},
+	{
+		name: 'Nastavení',
+		to: 'settings',
+		icon: CiSettings,
 	},
 ];
 

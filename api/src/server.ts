@@ -64,6 +64,7 @@ router.use('/api/records', recordRoute); // protected by JWT cookie
 router.use('/', express.static(path.join(__dirname, '/public'))); // serving either static index.html or transpilled version of client
 
 // hiding api informations
+router.disable('X-Powered-By');
 router.disable('x-powered-by');
 
 // Unknown route handling -----------------------------------

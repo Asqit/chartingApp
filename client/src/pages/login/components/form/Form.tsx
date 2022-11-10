@@ -70,6 +70,7 @@ const Form: FC<IForm> = ({ onSubmit }) => {
 				type="email"
 				label="Zadejte email"
 				name="email"
+				className="focus:text-gray-300"
 				error={inputs.emailError}
 				onChange={handleChange}
 			/>
@@ -80,6 +81,7 @@ const Form: FC<IForm> = ({ onSubmit }) => {
 				type={`${revealed ? 'text' : 'password'}`}
 				label="Zadejte heslo"
 				name="password"
+				className="focus:text-gray-300"
 				error={inputs.passwordError}
 				onChange={handleChange}
 			/>

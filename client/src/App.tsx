@@ -13,12 +13,13 @@ import { Login } from './pages/login/Login';
 import { Register } from './pages/register/Register';
 import { About } from './pages/about/About';
 import { Account } from './pages/account/Account';
+import { Settings } from './pages/settings/Settings';
 
-// Temporary commenting these endpoints, since they have no use (atleast for now)
-// import { Homepage } from './pages/homapage/Homepage';
-// import { Settings } from './pages/settings/Settings';
+import { useDarkMode } from './hooks/useDark';
 
 function App() {
+	useDarkMode(); // automatically switch to darkmode if prefered
+
 	return (
 		<UserProvider>
 			<BrowserRouter>
@@ -31,6 +32,7 @@ function App() {
 						<Route path="branches" element={<Branches />} />
 						<Route path="branches/:id" element={<Branch />} />
 						<Route path="about" element={<About />} />
+						<Route path="settings" element={<Settings />} />
 						<Route path="account" element={<Account />} />
 					</Route>
 				</Routes>

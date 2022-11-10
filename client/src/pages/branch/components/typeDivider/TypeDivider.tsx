@@ -10,11 +10,11 @@ function TypeDivider({
 	payload: IViewSensor[];
 }) {
 	return (
-		<div className="border rounded-2xl p-2 shadow-sm my-2">
+		<div className="rounded-2xl p-2 shadow-sm my-2 bg-white dark:bg-blue-gray-800">
 			<Typography variant="h3" className="p-2">
 				{type}
 			</Typography>
-			<div className="xl:gap-2 xl:grid xl:grid-cols-2">
+			<div>
 				{payload.map((sensor, id) => {
 					return <Sensor {...sensor} key={id} />;
 				})}

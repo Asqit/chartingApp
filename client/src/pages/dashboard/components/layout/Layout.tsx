@@ -9,7 +9,7 @@ function Layout({ logoutHandler }: { logoutHandler: () => void }) {
 	return (
 		<>
 			<section className="w-full h-screen">
-				<div className="flex h-full">
+				<div className="flex h-full xl:p-2 bg-white dark:bg-blue-gray-900">
 					<Sidebar user={user} logoutHandler={logoutHandler} />
 					<Content />
 				</div>

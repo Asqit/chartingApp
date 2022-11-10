@@ -16,28 +16,31 @@ import { Account } from './pages/account/Account';
 import { Settings } from './pages/settings/Settings';
 
 import { useDarkMode } from './hooks/useDark';
+import { useEffect, useState } from 'react';
+import { CookieWarning } from './components/CookieWarning';
 
 function App() {
 	useDarkMode(); // automatically switch to darkmode if prefered
-
 	return (
-		<UserProvider>
-			<BrowserRouter>
-				<Routes>
-					<Route path="*" element={<Lost />} />
-					<Route path="/" element={<Dashboard />} />
-					<Route path="/register" element={<Register />} />
-					<Route path="/login" element={<Login />} />
-					<Route path="/dashboard" element={<Dashboard />}>
-						<Route path="branches" element={<Branches />} />
-						<Route path="branches/:id" element={<Branch />} />
-						<Route path="about" element={<About />} />
-						<Route path="settings" element={<Settings />} />
-						<Route path="account" element={<Account />} />
-					</Route>
-				</Routes>
-			</BrowserRouter>
-		</UserProvider>
+		<>
+			<UserProvider>
+				<BrowserRouter>
+					<Routes>
+						<Route path="*" element={<Lost />} />
+						<Route path="/" element={<Dashboard />} />
+						<Route path="/register" element={<Register />} />
+						<Route path="/login" element={<Login />} />
+						<Route path="/dashboard" element={<Dashboard />}>
+							<Route path="branches" element={<Branches />} />
+							<Route path="branches/:id" element={<Branch />} />
+							<Route path="about" element={<About />} />
+							<Route path="settings" element={<Settings />} />
+							<Route path="account" element={<Account />} />
+						</Route>
+					</Routes>
+				</BrowserRouter>
+			</UserProvider>
+		</>
 	);
 }
 

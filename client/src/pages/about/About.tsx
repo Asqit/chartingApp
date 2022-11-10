@@ -17,19 +17,25 @@ function About() {
 				<ul>
 					<li>
 						<Tooltip
-							content="6.6.2022"
+							content="10.11.2022"
 							animate={{
 								mount: { scale: 1, y: 0 },
 								unmount: { scale: 0, y: 25 },
 							}}
 						>
 							<span>
-								<b>Verze: </b>1.0.0
+								<b>Verze: </b>1.1.0
 							</span>
 						</Tooltip>
 					</li>
 					<li>
-						<b>Web & API:</b> Ondřej Tuček
+						<b>Web & API:</b>{' '}
+						<a
+							href="https://ondrejtucek.netlify.app"
+							className="hover:text-teal-500"
+						>
+							Ondřej Tuček
+						</a>
 					</li>
 					<li>
 						<b>IoT/HW:</b> Tomáš Tuček

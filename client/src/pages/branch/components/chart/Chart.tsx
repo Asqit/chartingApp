@@ -1,15 +1,8 @@
-import {
-	AreaChart,
-	Area,
-	XAxis,
-	YAxis,
-	CartesianGrid,
-	Tooltip,
-	ResponsiveContainer,
-} from 'recharts';
+import { AreaChart, Area, XAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import { CustomTooltip } from './customTooltip/CustomTooltip';
 import { IViewRecord } from '../../models/apiResponse';
 import { FC, useEffect } from 'react';
+import moment from 'moment';
 
 export interface IChart {
 	data: IViewRecord[];
@@ -20,7 +13,7 @@ const Chart: FC<IChart> = ({ data, color }) => {
 	useEffect(() => {
 		data.forEach((record) => {
 			// converting mysql time to local
-			record.time = new Date(record.time).toLocaleString();
+			record.time = moment(record.time).local().toString();
 		});
 	}, [data]);
 

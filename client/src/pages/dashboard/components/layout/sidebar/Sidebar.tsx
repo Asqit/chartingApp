@@ -14,7 +14,7 @@ export interface ISidebar {
 
 const Sidebar: FC<ISidebar> = ({ user, logoutHandler }) => {
 	return (
-		<aside className="hidden md:block md:w-1/3 md:max-w-xs bg-white dark:bg-blue-gray-800 dark:text-gray-400">
+		<aside className="hidden md:block md:w-1/3 md:max-w-xs bg-white dark:bg-blue-gray-800 dark:text-gray-400 xl:rounded-2xl">
 			<header className="w-full px-4 py-4 text-center flex items-center justify-center">
 				<Avatar src={brand} size="md" />
 				<Typography

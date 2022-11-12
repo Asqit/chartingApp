@@ -1,5 +1,5 @@
 import http from 'http';
-import express, { Request, Response, NextFunction } from 'express';
+import express, { Request, Response, NextFunction, application } from 'express';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import path from 'path';
@@ -61,7 +61,22 @@ router.use((req: Request, res: Response, next: NextFunction) => {
 router.use('/api/account', accountRoute);
 router.use('/api/branches', branchRoute); // protected by JWT cookie
 router.use('/api/records', recordRoute); // protected by JWT cookie
-router.use('/', express.static(path.join(__dirname, '/public'))); // serving either static index.html or transpilled version of client
+
+router.use((req, res, next) => {
+	if (/(.ico|.js|.css|.jpg|.png|.map)$/i.test(req.path)) {
+		next();
+	} else {
+		res.header(
+			'Cache-Control',
+			'private, no-cache, no-store, must-revalidate'
+		);
+		res.header('Expires', '-1');
+		res.header('Pragma', 'no-cache');
+		res.sendFile(path.join(__dirname, 'public', 'index.html'));
+	}
+});
+
+router.use(express.static(path.join(__dirname, 'public')));
 
 // hiding api informations
 router.disable('X-Powered-By');

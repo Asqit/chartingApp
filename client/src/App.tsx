@@ -14,23 +14,25 @@ import { Register } from './pages/register/Register';
 import { About } from './pages/about/About';
 import { Account } from './pages/account/Account';
 import { Settings } from './pages/settings/Settings';
+import { DashboardIndex } from './pages/dashboardIndex/DashboardIndex';
+import { Homepage } from './pages/homapage/Homepage';
 
+// Hooks
 import { useDarkMode } from './hooks/useDark';
-import { useEffect, useState } from 'react';
-import { CookieWarning } from './components/CookieWarning';
 
 function App() {
-	useDarkMode(); // automatically switch to darkmode if prefered
+	useDarkMode();
 	return (
 		<>
 			<UserProvider>
 				<BrowserRouter>
 					<Routes>
 						<Route path="*" element={<Lost />} />
-						<Route path="/" element={<Dashboard />} />
+						<Route path="/" element={<Homepage />} />
 						<Route path="/register" element={<Register />} />
 						<Route path="/login" element={<Login />} />
 						<Route path="/dashboard" element={<Dashboard />}>
+							<Route path="" element={<DashboardIndex />} />
 							<Route path="branches" element={<Branches />} />
 							<Route path="branches/:id" element={<Branch />} />
 							<Route path="about" element={<About />} />

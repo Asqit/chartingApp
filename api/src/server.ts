@@ -12,6 +12,7 @@ import config from './config/config';
 import recordRoute from './routes/recordRoute';
 import accountRoute from './routes/accountRoute';
 import branchRoute from './routes/branchRoute';
+import publicRoute from './routes/publicRoutes';
 
 // Where our logs are from
 const NAMESPACE = 'Server';
@@ -58,6 +59,7 @@ router.use((req: Request, res: Response, next: NextFunction) => {
 });
 
 // serving endpoints -----------------------------------
+router.use('/api/public', publicRoute);
 router.use('/api/account', accountRoute);
 router.use('/api/branches', branchRoute); // protected by JWT cookie
 router.use('/api/records', recordRoute); // protected by JWT cookie

@@ -1,6 +1,12 @@
 import { useState } from 'react';
 
-export function useSafeLocalStorage(key: string, initialValue: any) {
+/**
+ * **Description:** this function will try to safely store a value in `localStorage`.
+ * If browser does not support `localStorage` or fails to use it, then the value will be store in `React.useState`
+ *
+ * **Note:** Its not my code. I found it somewhere in StackOverflow, but its awesome.
+ */
+function useSafeLocalStorage(key: string, initialValue: any) {
 	const [valueProxy, setValueProxy] = useState(() => {
 		try {
 			const value = window.localStorage.getItem(key);
@@ -21,3 +27,5 @@ export function useSafeLocalStorage(key: string, initialValue: any) {
 
 	return [valueProxy, setValue];
 }
+
+export { useSafeLocalStorage };

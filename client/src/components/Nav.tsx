@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 import brand from '../assets/brand/brand.svg';
 
 const navList = (
-	<ul className="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
+	<ul className="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6 dark:text-gray-400">
 		<Typography
 			as="li"
 			variant="small"
@@ -49,8 +49,11 @@ function Nav() {
 	}, []);
 
 	return (
-		<Navbar className="mx-auto py-2 px-4 lg:px-8 lg:py-4" fullWidth={true}>
-			<div className="container mx-auto flex items-center justify-between text-blue-gray-900">
+		<Navbar
+			className="mx-auto py-2 px-4 lg:px-8 lg:py-4 dark:bg-blue-gray-900 dark:border-none"
+			fullWidth={true}
+		>
+			<div className="container mx-auto flex items-center justify-between text-blue-gray-900 dark:text-gray-400">
 				<Typography
 					variant="small"
 					className="mr-4 cursor-pointer py-1.5 font-normal"

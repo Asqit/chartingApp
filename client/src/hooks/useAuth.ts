@@ -3,6 +3,12 @@ import { UserContext } from '../context/userContext/userContext';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
+/**
+ * **Description:** This hook is used for authentication.
+ * With each render of `Dashboard` component, this hook will sent a query to API, which then anwsers either with `401` or `200`.
+ *
+ * **note:** I cannot find more efficient way yet, so this is it for now.
+ */
 function useAuth() {
 	const redirect = useNavigate();
 	const [loading, setLoading] = useState(true);

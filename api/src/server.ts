@@ -1,3 +1,7 @@
+// ================================================ //
+// MaR - server					     	21.11.2022	//
+// Ondřej Tuček		     	ondrejtucek9@gmail.com	//
+// ================================================ //
 import http from 'http';
 import express, { Request, Response, NextFunction } from 'express';
 import cookieParser from 'cookie-parser';
@@ -38,48 +42,51 @@ router.use((req, res, next) => {
 });
 
 // parsing the request -----------------------------------
-router.use(express.urlencoded({ extended: true })); // learning express about String, Array
-router.use(express.json()); // learning express about JSON
-router.use(cookieParser()); // learning express about cookies
+router.use(express.urlencoded({ extended: true })); // String, Array
+router.use(express.json()); // JSON
+router.use(cookieParser()); // cookies
 router.use(cors()); // cross-site policy
 
 // setting rules of the API -----------------------------------
 router.use((req: Request, res: Response, next: NextFunction) => {
-	res.header('Access-Control-Allow-Origin', '*'); // TODO: requires changes before release
+	res.header('Access-Control-Allow-Origin', '*');
 	res.header(
 		'Access-Controll-Allow-Headers',
 		'Origin, X-Requester-With, Content-Type, Accept, Authorization'
 	);
+
 	if (req.method == 'OPTIONS') {
 		res.header('Access-Control-Allow-Methods', 'GET PATCH DELETE POST PUT');
-		return res.status(200).json({});
+		return res.status(200).end();
 	}
 
 	next();
 });
 
+// hiding api informations
+router.disable('x-powered-by');
+
 // serving endpoints -----------------------------------
 router.use('/api/public', publicRoute);
 router.use('/api/account', accountRoute);
-router.use('/api/branches', branchRoute); // protected by JWT cookie
-router.use('/api/records', recordRoute); // protected by JWT cookie
-router.use('/', express.static(path.join(__dirname, '/public'))); // serving either static index.html or transpilled version of client
 
-// hiding api informations
-router.disable('X-Powered-By');
-router.disable('x-powered-by');
+// Protected by JWT cookie
+router.use('/api/branches', branchRoute);
+router.use('/api/records', recordRoute);
+
+// serving either static index.html or transpilled version of client
+router.use('/', express.static(path.join(__dirname, '/public')));
 
 // Unknown route handling -----------------------------------
 router.use((req, res) => {
-	const error = new Error('Not found');
-
 	return res.status(404).json({
-		message: error.message,
+		message: 'Not found',
 	});
 });
 
 // starting the server -----------------------------------
 const httpServer = http.createServer(router);
+
 httpServer.listen(config.server.port, () =>
 	logging.info(
 		NAMESPACE,

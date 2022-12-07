@@ -16,8 +16,6 @@ function Dashboard() {
 		redirect('/login');
 	};
 
-	console.log(accepted);
-
 	if (loading) {
 		return <Loader />;
 	}

@@ -1,4 +1,11 @@
-import { AreaChart, Area, XAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import {
+	AreaChart,
+	Area,
+	XAxis,
+	Tooltip,
+	ResponsiveContainer,
+	CartesianGrid,
+} from 'recharts';
 import { CustomTooltip } from './customTooltip/CustomTooltip';
 import { IViewRecord } from '../../models/apiResponse';
 import { FC, useEffect } from 'react';
@@ -20,7 +27,13 @@ const Chart: FC<IChart> = ({ data, color }) => {
 	return (
 		<ResponsiveContainer width="100%" height="100%">
 			<AreaChart data={data}>
-				<XAxis dataKey="time" />
+				<XAxis
+					dataKey="time"
+					/*hide*/ tickFormatter={(unixTime) =>
+						moment(unixTime).format('HH:mm')
+					}
+				/>
+				{false ? <CartesianGrid strokeDasharray={'2'} /> : null}
 				<Tooltip
 					content={
 						<CustomTooltip active={true} payload={[]} label={''} />

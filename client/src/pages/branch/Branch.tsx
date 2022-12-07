@@ -24,7 +24,6 @@ import { Loader } from '../../components/Loader';
 import { useLocation } from 'react-router-dom';
 import { getTimes } from './utils/getTimes';
 import axios from 'axios';
-import moment from 'moment';
 
 function Branch() {
 	const params = useLocation();

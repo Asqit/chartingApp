@@ -13,7 +13,7 @@ const CustomTooltip: FC<ICustomTooltip> = ({ active, payload, label }) => {
 			<div className="bg-white dark:bg-blue-gray-700 p-2 rounded-md outline-none">
 				<Typography>Hodnota: {payload[0].value}</Typography>
 				<Typography>
-					Čas: {new Date(label!).toLocaleString()}
+					Čas: {new Date(label!).toLocaleString('cs-cz')}
 				</Typography>
 			</div>
 		);

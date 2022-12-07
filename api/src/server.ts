@@ -74,8 +74,24 @@ router.use('/api/account', accountRoute);
 router.use('/api/branches', branchRoute);
 router.use('/api/records', recordRoute);
 
-// serving either static index.html or transpilled version of client
-router.use('/', express.static(path.join(__dirname, '/public')));
+// serving client-side or sample page. Depending on NODE_ENV
+if (process.env.NODE_ENV === 'production') {
+	router.use(express.static(path.join(__dirname, '../../client/build')));
+	router.get('*', (req, res) =>
+		res.sendFile(
+			path.resolve(
+				__dirname,
+				'../',
+				'../',
+				'client',
+				'build',
+				'index.html'
+			)
+		)
+	);
+} else {
+	router.use('/', express.static(path.join(__dirname, '/public')));
+}
 
 // Unknown route handling -----------------------------------
 router.use((req, res) => {

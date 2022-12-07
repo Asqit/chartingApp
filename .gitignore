@@ -128,7 +128,7 @@ dist
 
 
 # visual studio code
-.vscode
+/.vscode
 
 # Yarn 
 /client/.yarn

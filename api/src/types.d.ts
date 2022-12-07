@@ -94,7 +94,7 @@ export interface IViewSensor {
 
 /**
  * **IViewRecords:** Clientside needs records from table, but I doesn't need them in the `IModelRecords` form
- * so naturally I split these records into several pieces (`IViewSensor`, `IVeiwRecord`), that are sent.
+ * so naturally I split these records into several pieces (`IViewSensor`, `IViewRecord`), that are sent.
  *
  * *Note:* this is used as wrapper for rest of `Records`
  */

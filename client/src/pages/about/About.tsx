@@ -17,14 +17,14 @@ function About() {
 				<ul>
 					<li>
 						<Tooltip
-							content="10.11.2022"
+							content="28.11.2022"
 							animate={{
 								mount: { scale: 1, y: 0 },
 								unmount: { scale: 0, y: 25 },
 							}}
 						>
 							<span>
-								<b>Verze: </b>1.1.0
+								<b>Verze: </b>1.2.0
 							</span>
 						</Tooltip>
 					</li>

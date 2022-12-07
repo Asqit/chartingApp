@@ -2,6 +2,10 @@ import { useEffect } from 'react';
 import { usePrefersDarkMode } from './usePrefersDarkMode';
 import { useSafeLocalStorage } from './useSafeLocalStorage';
 
+/**
+ * **Description:** This hook will evaluate which colorscheme is gonna be used.
+ * It will evaluated based on `localStorage` entry or `OS` preferences.
+ */
 function useDarkMode() {
 	const prefersDarkMode = usePrefersDarkMode();
 	const [isEnabled, setIsEnabled] = useSafeLocalStorage(

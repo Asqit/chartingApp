@@ -1,40 +1,12 @@
 import { Button, Typography } from '@material-tailwind/react';
-import { useEffect, useReducer, useCallback } from 'react';
-import axios from 'axios';
-import { fetchBranchesReducer } from './reducers/fetchBranchesReducer';
-import { INITIAL } from './models/fetchBranchesModel';
 import { Loader } from '../../components/Loader';
 import { ErrorModal } from '../../components/ErrorModal';
 import { BranchCard } from './components/branchCard/BranchCard';
+import { useFetchBranches } from '../../hooks/useFetchBranches';
 
 function Branches() {
-	const [{ loading, error, payload }, dispatch] = useReducer(
-		fetchBranchesReducer,
-		INITIAL
-	);
+	const { loading, error, payload, handleFetch } = useFetchBranches();
 
-	const handleFetch = useCallback(() => {
-		dispatch({ type: 'FETCH_START' });
-		axios
-			.get(`/api/branches/`)
-			.then((resp) => {
-				dispatch({ type: 'FETCH_SUCCESS', payload: resp.data });
-			})
-			.catch((err) => {
-				if (err.response) {
-					dispatch({
-						type: 'FETCH_FAIL',
-						error: err.response.data?.message,
-					});
-					return;
-				}
-				dispatch({ type: 'FETCH_FAIL', error: err.message });
-			});
-	}, []);
-
-	useEffect(() => handleFetch, [handleFetch]);
-
-	//====================================[BODY]===================================//
 	if (loading) {
 		return <Loader />;
 	}

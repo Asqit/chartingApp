@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-export function usePrefersDarkMode() {
+function usePrefersDarkMode() {
 	const [value, setValue] = useState(true);
 
 	useEffect(() => {
@@ -14,3 +14,5 @@ export function usePrefersDarkMode() {
 
 	return value;
 }
+
+export { usePrefersDarkMode };

@@ -11,7 +11,7 @@
 	"license": "MIT",
 	"private": true,
 	"scripts": {
-		"init": "yarn prisma db pull && yarn prisma generate",
+		"prismaInit": "yarn prisma db pull && yarn prisma generate",
 		"dev": "nodemon ./src/server.ts",
 		"start": "node ./dist/server.js",
 		"build": "tsc --build"

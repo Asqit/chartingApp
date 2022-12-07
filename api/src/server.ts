@@ -3,7 +3,7 @@
 // Ondřej Tuček		     	ondrejtucek9@gmail.com	//
 // ================================================ //
 import http from 'http';
-import express, { Request, Response, NextFunction } from 'express';
+import express, { Request, Response, NextFunction, application } from 'express';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import path from 'path';

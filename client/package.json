@@ -2,7 +2,7 @@
 	"name": "client",
 	"version": "1.2.0",
 	"private": true,
-	"proxy": "http://localhost:8000",
+	"proxy": "http://localhost:8080",
 	"dependencies": {
 		"@material-tailwind/react": "^1.2.4",
 		"@testing-library/jest-dom": "^5.14.1",

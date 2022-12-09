@@ -10,7 +10,7 @@ router.get(
 	'/active',
 	expressjwt({
 		secret: process.env.ACCESS_TOKEN_SECRET!,
-		getToken: (req: Request) => req.cookies.accessToken,
+		getToken: (req: Request) => req.cookies.auth,
 		algorithms: ['HS512'],
 	}),
 	controller.active
@@ -20,12 +20,12 @@ router.delete(
 	'/logout',
 	expressjwt({
 		secret: process.env.ACCESS_TOKEN_SECRET!,
-		getToken: (req: Request) => req.cookies.accessToken,
+		getToken: (req: Request) => req.cookies.auth,
 		algorithms: ['HS512'],
 	}),
 	(req: Request, res: Response) => {
 		// Destroy current cookie and thus the session
-		res.cookie('accessToken', '', { expires: new Date() });
+		res.cookie('auth', '', { expires: new Date() });
 		res.status(200).json({ message: 'OK' });
 	}
 );

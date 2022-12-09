@@ -4,7 +4,7 @@ import { differentiateRecords } from '../utils/differentiateRecords';
 import { prepareForChart } from '../utils/prepareForChart';
 import { getSensorMap } from '../utils/getSensorMap';
 import moment from 'moment';
-import logging from '../config/logging';
+import logging from '../config/log';
 
 async function getRecord(req: Request, res: Response) {
 	try {

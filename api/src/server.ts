@@ -1,38 +1,31 @@
-// ================================================ //
-// MaR - server					     	21.11.2022	//
-// Ondřej Tuček		     	ondrejtucek9@gmail.com	//
-// ================================================ //
 import http from 'http';
-import express, { Request, Response, NextFunction, application } from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import path from 'path';
 
 // server config files
-import logging from './config/logging';
+import log from './config/log';
 import config from './config/config';
 
 // server routes
 import recordRoute from './routes/recordRoute';
 import accountRoute from './routes/accountRoute';
 import branchRoute from './routes/branchRoute';
-import publicRoute from './routes/publicRoutes';
 
 // Where our logs are from
 const NAMESPACE = 'Server';
-
-// minimal router
 const router = express();
 
-// Logging the request -----------------------------------
+// log the request -----------------------------------
 router.use((req, res, next) => {
-	logging.info(
+	log.info(
 		NAMESPACE,
 		`METHOD - [${req.method}], URL - [${req.url}], IP - [${req.socket.remoteAddress}]`
 	);
 
 	res.on('finish', () => {
-		logging.info(
+		log.info(
 			NAMESPACE,
 			`METHOD - [${req.method}], URL - [${req.url}], IP - [${req.socket.remoteAddress}], STATUS - [${res.statusCode}]`
 		);
@@ -67,10 +60,7 @@ router.use((req: Request, res: Response, next: NextFunction) => {
 router.disable('x-powered-by');
 
 // serving endpoints -----------------------------------
-router.use('/api/public', publicRoute);
 router.use('/api/account', accountRoute);
-
-// Protected by JWT cookie
 router.use('/api/branches', branchRoute);
 router.use('/api/records', recordRoute);
 
@@ -93,19 +83,13 @@ if (process.env.NODE_ENV === 'production') {
 	router.use('/', express.static(path.join(__dirname, '/public')));
 }
 
-// Unknown route handling -----------------------------------
-router.use((req, res) => {
-	return res.status(404).json({
-		message: 'Not found',
-	});
-});
-
 // starting the server -----------------------------------
 const httpServer = http.createServer(router);
 
-httpServer.listen(config.server.port, () =>
-	logging.info(
+httpServer.listen(config.server.port, () => {
+	console.clear();
+	log.info(
 		NAMESPACE,
 		`server running on ${config.server.hostname}:${config.server.port}`
-	)
-);
+	);
+});

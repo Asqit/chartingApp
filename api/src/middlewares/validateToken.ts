@@ -1,6 +1,6 @@
 import { verify } from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
-import logger from '../config/logging';
+import logger from '../config/log';
 
 const NAMESPACE = 'utils/validateToken';
 

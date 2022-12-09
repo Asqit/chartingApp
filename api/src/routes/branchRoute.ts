@@ -9,7 +9,7 @@ router.get(
 	'/:id',
 	expressjwt({
 		secret: process.env.ACCESS_TOKEN_SECRET!,
-		getToken: (req: Request) => req.cookies.accessToken,
+		getToken: (req: Request) => req.cookies.auth,
 		algorithms: ['HS512'],
 	}),
 	controller.getBranch
@@ -19,7 +19,7 @@ router.get(
 	'/',
 	expressjwt({
 		secret: process.env.ACCESS_TOKEN_SECRET!,
-		getToken: (req: Request) => req.cookies.accessToken,
+		getToken: (req: Request) => req.cookies.auth,
 		algorithms: ['HS512'],
 	}),
 	controller.getBranches

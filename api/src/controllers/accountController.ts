@@ -3,7 +3,7 @@ import connector from '../config/prismaConnector';
 import { createToken } from '../utils/createToken';
 import bcrypt from 'bcrypt';
 import { IViewUser } from '../types';
-import logging from '../config/logging';
+import logging from '../config/log';
 import { decode } from 'jsonwebtoken';
 
 async function register(req: Request, res: Response) {
@@ -51,7 +51,7 @@ async function register(req: Request, res: Response) {
 
 		const TOKEN = Object(decode(token));
 
-		res.cookie('accessToken', token, {
+		res.cookie('auth', token, {
 			httpOnly: true,
 			maxAge: TOKEN.exp,
 		});
@@ -110,8 +110,9 @@ async function login(req: Request, res: Response) {
 		};
 
 		let token = createToken(tokenPayload);
+		const TOKEN = Object(decode(token));
 
-		res.cookie('accessToken', token, { httpOnly: true });
+		res.cookie('auth', token, { httpOnly: true, maxAge: TOKEN.exp });
 
 		res.status(200).json({
 			username: query.username,

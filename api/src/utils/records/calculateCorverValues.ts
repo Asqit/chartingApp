@@ -1,4 +1,4 @@
-import { IViewRecord, CornerValues } from '../types';
+import { IViewRecord, CornerValues } from '../../types';
 
 /**
  * @param {IViewRecord} payload

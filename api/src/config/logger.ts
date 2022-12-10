@@ -8,12 +8,12 @@ const _genericLog = (
 ) => {
 	if (!object) {
 		return console.log(
-			`[${getTimeStamp()}] [${variant}] [${namespace}] ${message}`
+			`[${getTimeStamp()}] [${variant}] [${namespace}] - ${message}`
 		);
 	}
 
 	console.log(
-		`[${getTimeStamp()}] [${variant}] [${namespace}] ${message}`,
+		`[${getTimeStamp()}] [${variant}] [${namespace}] - ${message}`,
 		object
 	);
 };

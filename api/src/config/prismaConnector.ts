@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client';
-import logging from './log';
+import logging from './logger';
+import { exit } from 'process';
 
 const prisma = new PrismaClient();
 
@@ -18,7 +19,7 @@ prisma
 			`prisma cannot connect to database`,
 			err
 		);
-		process.exit(1);
+		exit(1);
 	});
 
 export default prisma;

@@ -5,13 +5,14 @@ import cors from 'cors';
 import path from 'path';
 
 // server config files
-import log from './config/log';
+import log from './config/logger';
 import config from './config/config';
 
-// server routes
-import recordRoute from './routes/recordRoute';
-import accountRoute from './routes/accountRoute';
-import branchRoute from './routes/branchRoute';
+// server routes & middlewares
+import errorHandler from './middlewares/errorMiddleware';
+import recordRoute from './routes/recordRoutes';
+import accountRoute from './routes/userRoutes';
+import branchRoute from './routes/branchRoutes';
 
 // Where our logs are from
 const NAMESPACE = 'Server';
@@ -60,7 +61,7 @@ router.use((req: Request, res: Response, next: NextFunction) => {
 router.disable('x-powered-by');
 
 // serving endpoints -----------------------------------
-router.use('/api/account', accountRoute);
+router.use('/api/users', accountRoute);
 router.use('/api/branches', branchRoute);
 router.use('/api/records', recordRoute);
 
@@ -82,6 +83,9 @@ if (process.env.NODE_ENV === 'production') {
 } else {
 	router.use('/', express.static(path.join(__dirname, '/public')));
 }
+
+// Custom error middleware
+router.use(errorHandler);
 
 // starting the server -----------------------------------
 const httpServer = http.createServer(router);

@@ -3,7 +3,7 @@ import {
 	IViewRecords,
 	IViewSensor,
 	RecordByType,
-} from '../types';
+} from '../../types';
 
 function diffByType(payload: IModelRecords[]) {
 	const PAYLOAD_LENGTH = payload.length;

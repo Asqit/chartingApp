@@ -1,3 +1,4 @@
+// core libs
 import http from 'http';
 import express, { Request, Response, NextFunction } from 'express';
 import cookieParser from 'cookie-parser';
@@ -18,7 +19,7 @@ import branchRoute from './routes/branchRoutes';
 const NAMESPACE = 'Server';
 const router = express();
 
-// log the request -----------------------------------
+// log the request
 router.use((req, res, next) => {
 	log.info(
 		NAMESPACE,
@@ -35,13 +36,13 @@ router.use((req, res, next) => {
 	next();
 });
 
-// parsing the request -----------------------------------
+// parsing the request
 router.use(express.urlencoded({ extended: true })); // String, Array
 router.use(express.json()); // JSON
 router.use(cookieParser()); // cookies
 router.use(cors()); // cross-site policy
 
-// setting rules of the API -----------------------------------
+// setting rules of the API
 router.use((req: Request, res: Response, next: NextFunction) => {
 	res.header('Access-Control-Allow-Origin', '*');
 	res.header(
@@ -60,7 +61,7 @@ router.use((req: Request, res: Response, next: NextFunction) => {
 // hiding api informations
 router.disable('x-powered-by');
 
-// serving endpoints -----------------------------------
+// serving endpoints
 router.use('/api/users', accountRoute);
 router.use('/api/branches', branchRoute);
 router.use('/api/records', recordRoute);
@@ -87,7 +88,7 @@ if (process.env.NODE_ENV === 'production') {
 // Custom error middleware
 router.use(errorHandler);
 
-// starting the server -----------------------------------
+// starting the server
 const httpServer = http.createServer(router);
 
 httpServer.listen(config.server.port, () => {

@@ -27,6 +27,8 @@ cat env-sample.txt > .env
 
 nano .env
 
+cd ./api
+
 yarn run prismaInit
 yarn run build
 

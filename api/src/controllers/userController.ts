@@ -47,16 +47,18 @@ const register = asyncHandler(async (req: Request, res: Response) => {
 	}
 
 	// Sending response
-	const token = createToken({ id: newUser.id });
-	const expiration = Object(decode(token)).exp;
+	const ETA = 5 * 3600; // 5 hours in seconds
+	const TOKEN = createToken({ id: newUser.id }, { expiresIn: ETA });
+	const EXPIRATION = Object(decode(TOKEN)).exp;
 
-	res.cookie('auth', token, {
+	res.cookie('auth', TOKEN, {
 		httpOnly: true,
-		maxAge: expiration * 1000, // multiply by 1000 for regular JS Date.
+		maxAge: ETA * 1000 + 3600000,
 	});
 
 	res.status(201).json({
 		username,
+		expiration: EXPIRATION,
 	});
 });
 
@@ -89,16 +91,18 @@ const login = asyncHandler(async (req: Request, res: Response) => {
 	}
 
 	// Sending response
-	const token = createToken({ id: user.id });
-	const expiration = Object(decode(token)).exp;
+	const ETA = 5 * 3600; // 5 hours in seconds
+	const TOKEN = createToken({ id: user.id }, { expiresIn: ETA });
+	const EXPIRATION = Object(decode(TOKEN)).exp;
 
-	res.cookie('auth', token, {
+	res.cookie('auth', TOKEN, {
 		httpOnly: true,
-		maxAge: expiration * 1000, // multiply by 1000 for regular JS Date.
+		maxAge: ETA * 1000 + 3600000,
 	});
 
-	res.status(201).json({
+	res.status(200).json({
 		username: user.username,
+		expiration: EXPIRATION,
 	});
 });
 

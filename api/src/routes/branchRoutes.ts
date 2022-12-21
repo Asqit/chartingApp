@@ -1,10 +1,10 @@
 import controller from '../controllers/branchController';
-import validateToken from '../middlewares/tokenMiddleware';
+import protectedRoute from '../middlewares/protectedRoute';
 import { Router } from 'express';
 
 const router = Router();
 
-router.get('/:id', validateToken, controller.getBranch);
-router.get('/', validateToken, controller.getBranches);
+router.get('/:id', protectedRoute, controller.getBranch);
+router.get('/', protectedRoute, controller.getBranches);
 
 export default router;

@@ -3,7 +3,7 @@ import asyncHandler from 'express-async-handler';
 import { verify } from 'jsonwebtoken';
 import prisma from '../config/prismaConnector';
 
-const validateToken = asyncHandler(
+const protectedRoute = asyncHandler(
 	async (req: Request, res: Response, next: NextFunction) => {
 		const token = req.cookies.auth;
 		const salt = process.env.ACCESS_TOKEN_SECRET!;
@@ -30,4 +30,4 @@ const validateToken = asyncHandler(
 	}
 );
 
-export default validateToken;
+export default protectedRoute;

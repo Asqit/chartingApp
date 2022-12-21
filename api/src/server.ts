@@ -1,4 +1,3 @@
-// core libs
 import http from 'http';
 import express, { Request, Response, NextFunction } from 'express';
 import cookieParser from 'cookie-parser';

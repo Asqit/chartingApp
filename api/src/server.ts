@@ -5,19 +5,20 @@ import cors from 'cors';
 import path from 'path';
 
 // server config files
-import log from './config/log';
+import log from './config/logger';
 import config from './config/config';
 
-// server routes
-import recordRoute from './routes/recordRoute';
-import accountRoute from './routes/accountRoute';
-import branchRoute from './routes/branchRoute';
+// server routes & middlewares
+import errorHandler from './middlewares/errorMiddleware';
+import recordRoute from './routes/recordRoutes';
+import accountRoute from './routes/userRoutes';
+import branchRoute from './routes/branchRoutes';
 
 // Where our logs are from
 const NAMESPACE = 'Server';
 const router = express();
 
-// log the request -----------------------------------
+// log the request
 router.use((req, res, next) => {
 	log.info(
 		NAMESPACE,
@@ -34,13 +35,13 @@ router.use((req, res, next) => {
 	next();
 });
 
-// parsing the request -----------------------------------
+// parsing the request
 router.use(express.urlencoded({ extended: true })); // String, Array
 router.use(express.json()); // JSON
 router.use(cookieParser()); // cookies
 router.use(cors()); // cross-site policy
 
-// setting rules of the API -----------------------------------
+// setting rules of the API
 router.use((req: Request, res: Response, next: NextFunction) => {
 	res.header('Access-Control-Allow-Origin', '*');
 	res.header(
@@ -59,8 +60,8 @@ router.use((req: Request, res: Response, next: NextFunction) => {
 // hiding api informations
 router.disable('x-powered-by');
 
-// serving endpoints -----------------------------------
-router.use('/api/account', accountRoute);
+// serving endpoints
+router.use('/api/users', accountRoute);
 router.use('/api/branches', branchRoute);
 router.use('/api/records', recordRoute);
 
@@ -83,7 +84,10 @@ if (process.env.NODE_ENV === 'production') {
 	router.use('/', express.static(path.join(__dirname, '/public')));
 }
 
-// starting the server -----------------------------------
+// Custom error middleware
+router.use(errorHandler);
+
+// starting the server
 const httpServer = http.createServer(router);
 
 httpServer.listen(config.server.port, () => {

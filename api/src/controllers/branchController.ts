@@ -1,42 +1,40 @@
+import asyncHandler from 'express-async-handler';
 import { Request, Response } from 'express';
-import connector from '../config/mariaConnector';
-import logging from '../config/log';
+import maria from '../config/mariaConnector';
 
-async function getBranch(req: Request, res: Response) {
-	try {
-		const { id } = req.params;
+/**--------------------------------------------------------------------
+ * 
+ * **Description:** This function will get a single `Branch`
+ *
+ * **Route:** `[GET] /api/users/:id`
+ *
+ * **Access:** private
+ * 
+ ---------------------------------------------------------------------*/
+const getBranch = asyncHandler(async (req: Request, res: Response) => {
+	const { id } = req.params;
 
-		logging.debug('getBranch', 'getting token from header', req.headers);
+	const response = await maria.query(
+		'SELECT * FROM `Branches` WHERE `id` = ?',
+		id
+	);
 
-		const response = await connector.query(
-			'SELECT * FROM `Branches` WHERE `id` = ?',
-			id
-		);
+	res.status(200).json(...response);
+});
 
-		delete response.meta;
+/**--------------------------------------------------------------------
+ * 
+ * **Description:** This function will get all `Branches`
+ *
+ * **Route:** `[GET] /api/users/`
+ *
+ * **Access:** private
+ * 
+ ---------------------------------------------------------------------*/
+const getBranches = asyncHandler(async (req: Request, res: Response) => {
+	const response = await maria.query('SELECT * FROM `Branches`');
 
-		res.status(200).json([...response]);
-	} catch (error) {
-		logging.error('controllers/branchController', `Server error`, error);
-		res.status(500).json({
-			message: 'An error occured, please try again later.',
-		});
-	}
-}
-
-async function getBranches(req: Request, res: Response) {
-	try {
-		const response = await connector.query('SELECT * FROM `Branches`');
-
-		delete response.meta;
-
-		res.status(200).json([...response]);
-	} catch (error) {
-		logging.error('controllers/branchController', `Server error`, error);
-		res.status(500).json({
-			message: 'An error occured, please try again later.',
-		});
-	}
-}
+	res.status(200).json([...response]);
+});
 
 export default { getBranch, getBranches };

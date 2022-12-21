@@ -1,29 +1,37 @@
 #!/usr/bin/bash
 
-# Quit if no NPM
+# Check if node exists
 if ! [ -x "$(command -v npm)" ]; then
   echo 'Error: npm is not installed.' >&2
   exit 1
 fi
 
 
-# Install yarn
+# Installing yarn 
 if ! [ -x "$(command -v yarn)" ]; then
-  npm i -g yarn
+  npm i -G yarn
 fi
 
-# Prepare client
-cd ./client
+# prepare client 
+cd client 
+
 yarn install 
 yarn run build
 
-# Prepare server
+# prepare server
 cd ../api
-yarn install 
 
+#yarn install 
+touch .env
 cat env-sample.txt > .env
 
-echo "done..."
-echo "To continue, please edit .env file with your values, the file is in api folder"
-echo "After that run yarn run prismaInit"
-echo "And finaly run yarn start"
+nano .env
+
+cd ./api
+
+yarn run prismaInit
+yarn run build
+
+
+echo "All done..."
+echo "To continue, please run yarn start"

@@ -1,4 +1,4 @@
-import { IModelSensorMap, IViewRecords } from '../types';
+import { IModelSensorMap, IViewRecords } from '../../types';
 import { getProperType } from './getProperType';
 import { calculateCornerValues } from './calculateCorverValues';
 import { getChartColor } from './getChartColor';

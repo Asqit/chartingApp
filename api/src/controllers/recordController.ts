@@ -1,82 +1,92 @@
+import asyncHandler from 'express-async-handler';
+import maria from '../config/mariaConnector';
+import moment from 'moment';
 import { Request, Response } from 'express';
-import connector from '../config/mariaConnector';
+import { getSensorMap } from '../utils/getSensorMap';
 import { differentiateRecords } from '../utils/differentiateRecords';
 import { prepareForChart } from '../utils/prepareForChart';
-import { getSensorMap } from '../utils/getSensorMap';
-import moment from 'moment';
-import logging from '../config/log';
 
-async function getRecord(req: Request, res: Response) {
-	try {
-		const { id } = req.params;
+/**--------------------------------------------------------------------
+ * 
+ * **Description:** This function will fetch single record
+ *
+ * **Route:** `[GET] /api/users/:branch/:id`
+ *
+ * **Access:** private
+ * 
+ ---------------------------------------------------------------------*/
+const getRecord = asyncHandler(async (req: Request, res: Response) => {
+	const { id, branch } = req.params;
 
-		const response = await connector.query(
-			'SELECT * FROM `Records` WHERE id = ?',
-			[id]
-		);
+	const response = await maria.query(
+		'SELECT * FROM `Records` WHERE `id` = ? AND `branchId` = ?',
+		[id, branch]
+	);
 
-		delete response.meta;
-
-		res.status(200).json([...response]);
-	} catch (error) {
-		logging.error('controllers/recordController', `Server error`, error);
-		res.status(500).json({
-			message: 'An error occured, please try again later.',
-		});
+	if (!response) {
+		res.status(404);
+		throw new Error('No records found');
 	}
-}
 
-async function getAllRecords(req: Request, res: Response) {
-	try {
-		const response = await connector.query(
-			'SELECT * FROM `Records` ORDER BY `id` ASC'
-		);
+	res.status(200).json(...response);
+});
 
-		delete response.meta;
+/**--------------------------------------------------------------------
+ * 
+ * **Description:** This function will fetch all records
+ *
+ * **Route:** `[GET] /api/users/:branch`
+ *
+ * **Access:** private
+ * 
+ ---------------------------------------------------------------------*/
+const getRecords = asyncHandler(async (req: Request, res: Response) => {
+	const { branch } = req.params;
 
-		let data = differentiateRecords(response);
+	const response = await maria.query(
+		'SELECT * FROM `Records` WHERE `branchId` = ?',
+		[branch]
+	);
 
-		res.status(200).json([...data]);
-	} catch (error) {
-		logging.error('controllers/recordController', `Server error`, error);
-		res.status(500).json({
-			message: 'An error occured, please try again later.',
-		});
+	if (!response) {
+		res.status(404);
+		throw new Error('No records found');
 	}
-}
 
-async function getFilteredRecords(req: Request, res: Response) {
-	try {
-		const { branch, from, to, precise } = req.body;
+	res.status(200).json(response);
+});
 
-		let dateFrom = moment(from).format('YYYY-MM-DD k-m-s');
-		let dateTo = moment(to).format('YYYY-MM-DD k-m-s');
+/**--------------------------------------------------------------------
+ * 
+ * **Description:** This function will fetch filtered records
+ *
+ * **Route:** `[POST] /api/users/`
+ *
+ * **Access:** private
+ * 
+ ---------------------------------------------------------------------*/
+const getFilteredRecords = asyncHandler(async (req: Request, res: Response) => {
+	const { branch, from, to } = req.body;
 
-		const response = await connector.query(
-			'SELECT * FROM `Records` WHERE `branchId` = ? AND `time` >= ? AND `time` <= ? ORDER BY `time` ASC',
-			[branch, dateFrom, dateTo]
-		);
+	// Converting JS date to MySQL compatible format
+	let dateFrom = moment(from).format('YYYY-MM-DD k-m-s');
+	let dateTo = moment(to).format('YYYY-MM-DD k-m-s');
 
-		// clearning mariaDB's meta object
-		delete response.meta;
+	const resp = await maria.query(
+		'SELECT * FROM `Records` WHERE `branchId` = ? AND `time` >= ? AND `time` <= ? ORDER BY `time` ASC',
+		[branch, dateFrom, dateTo]
+	);
 
-		let sensorMap = await getSensorMap(branch);
-
-		let preFinals = differentiateRecords(response);
-
-		let data = prepareForChart(preFinals, sensorMap);
-
-		res.status(200).json([...data]);
-	} catch (error) {
-		logging.error('controllers/recordController', `Server error`, error);
-		res.status(500).json({
-			message: 'An error occured, please try again later.',
-		});
+	if (!resp) {
+		res.status(404);
+		throw new Error('No records found');
 	}
-}
 
-export default {
-	getRecord,
-	getAllRecords,
-	getFilteredRecords,
-};
+	let sensorMap = await getSensorMap(branch);
+	let temporaryData = differentiateRecords(resp);
+	let data = prepareForChart(temporaryData, sensorMap);
+
+	res.status(200).json([...data]);
+});
+
+export default { getRecord, getRecords, getFilteredRecords };

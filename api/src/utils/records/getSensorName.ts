@@ -1,4 +1,4 @@
-import { IModelSensorMap } from '../types';
+import { IModelSensorMap } from '../../types';
 
 function getSensorName(array: IModelSensorMap[], label: string) {
 	const ARRAY_LENGTH = array.length;

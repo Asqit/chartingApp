@@ -7,7 +7,7 @@ const pool = mariadb.createPool({
 	password: process.env.DB_PWD,
 	database: process.env.DB,
 	trace: Boolean(process.env.DB_ERROR_TRACE) || false,
-	//rowsAsArray: true, // With this option on, we get Array instead of JSON as response
+	rowsAsArray: true, // With this option on, we get Array instead of JSON as response
 });
 
 export default pool;

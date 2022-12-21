@@ -1,4 +1,4 @@
-import { SensorType } from '../types';
+import { SensorType } from '../../types';
 
 /**
  * @param {SensorType} type

@@ -115,4 +115,4 @@ function prepareServer(areWorkersRequired = false) {
 	}
 }
 
-prepareServer(false);
+prepareServer(true);

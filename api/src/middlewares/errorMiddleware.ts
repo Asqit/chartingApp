@@ -1,12 +1,20 @@
-const errorHandler = (err: any, req: any, res: any, next: any) => {
-	const STATUS_CODE = res.statusCode ? res.statusCode : 500;
+import { Request, Response, NextFunction } from 'express';
 
-	res.status(STATUS_CODE);
+// prettier-ignore
+function errorHandler(err:Error, req:Request, res:Response, next:NextFunction) {
+	const STATUS_CODE = req.statusCode ? req.statusCode : 500;
 
-	res.json({
-		message: err.message,
-		stack: process.env.NODE_ENV === 'production' ? null : err.stack,
-	});
-};
+	if(process.env.NODE_ENV === "development") {
+		res.status(STATUS_CODE).json({
+			message: "An error occurred in server-side",
+			stack: err.stack
+		});
+		return;
+	}
+
+	res.status(STATUS_CODE).json({
+		message: "An error occurred in server-side"
+	})
+}
 
 export default errorHandler;

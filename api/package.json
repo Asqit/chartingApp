@@ -42,6 +42,7 @@
 		"@types/express-jwt": "^7.4.2",
 		"@types/jsonwebtoken": "^8.5.9",
 		"@types/moment": "^2.13.0",
+		"loadtest": "^5.2.0",
 		"nodemon": "^2.0.20",
 		"prisma": "^4.5.0",
 		"ts-node": "^10.9.1"

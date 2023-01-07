@@ -2,9 +2,9 @@ import asyncHandler from 'express-async-handler';
 import maria from '../config/mariaConnector';
 import moment from 'moment';
 import { Request, Response } from 'express';
-import { getSensorMap } from '../utils/getSensorMap';
-import { differentiateRecords } from '../utils/differentiateRecords';
-import { prepareForChart } from '../utils/prepareForChart';
+import { getSensorMap } from '../utils/records/getSensorMap';
+import { differentiateRecords } from '../utils/records/differentiateRecords';
+import { prepareForChart } from '../utils/records/prepareForChart';
 
 /**--------------------------------------------------------------------
  * 

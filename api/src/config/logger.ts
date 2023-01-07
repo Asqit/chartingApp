@@ -1,37 +1,86 @@
-const getTimeStamp = () => new Date().toISOString();
+import moment from 'moment';
 
-const _genericLog = (
-	namespace: string,
-	variant: string,
-	message: string,
-	object?: any
-) => {
-	if (!object) {
-		return console.log(
-			`[${getTimeStamp()}] [${variant}] [${namespace}] - ${message}`
-		);
+const getTimeStamp = () => moment().format('DD-MM-YY HH:mm:SS');
+
+type LogType = 'INFO' | 'WARN' | 'ERROR';
+
+interface IGenericLogParams {
+	object?: any;
+	namespace: string;
+	message: string;
+	type: LogType;
+}
+
+// "\x1b[0m" = reset
+// "\x1b[31m" = font red
+// "\x1b[33m" = font yellow
+// "\x1b[36m" = font cyan
+// "\x1b[32m" = font green
+
+function genericLog(params: IGenericLogParams) {
+	const { object, message, namespace, type } = params;
+
+	switch (type) {
+		case 'ERROR':
+			console.log(
+				'\x1b[36m',
+				`[${getTimeStamp()}]`,
+				'\x1b[31m',
+				`[${namespace}] [ERROR] - ${message}`,
+				'\x1b[0m',
+				object ? object : ''
+			);
+			break;
+		case 'WARN':
+			console.log(
+				'\x1b[36m',
+				`[${getTimeStamp()}]`,
+				'\x1b[33m',
+				`[${namespace}] [WARN] - ${message}`,
+				'\x1b[0m',
+				object ? object : ''
+			);
+			break;
+		default:
+			console.log(
+				'\x1b[36m',
+				`[${getTimeStamp()}]`,
+				'\x1b[32m',
+				`[${namespace}] [INFO] - ${message}`,
+				'\x1b[0m',
+				object ? object : ''
+			);
+			break;
 	}
+}
 
-	console.log(
-		`[${getTimeStamp()}] [${variant}] [${namespace}] - ${message}`,
-		object
-	);
-};
+function info(namespace: string, message: string, object?: any) {
+	genericLog({
+		namespace,
+		message,
+		object,
+		type: 'INFO',
+	});
+}
 
-const info = (namespace: string, message: string, object?: any) => {
-	return _genericLog(namespace, 'INFO', message, object);
-};
+function warn(namespace: string, message: string, object?: any) {
+	genericLog({
+		namespace,
+		message,
+		object,
+		type: 'WARN',
+	});
+}
 
-const warn = (namespace: string, message: string, object?: any) => {
-	return _genericLog(namespace, 'WARN', message, object);
-};
+function error(namespace: string, message: string, object?: any) {
+	genericLog({
+		namespace,
+		message,
+		object,
+		type: 'ERROR',
+	});
+}
 
-const error = (namespace: string, message: string, object?: any) => {
-	return _genericLog(namespace, 'ERROR', message, object);
-};
+const logger = { info, error, warn };
 
-const debug = (namespace: string, message: string, object?: any) => {
-	return _genericLog(namespace, 'DEBUG', message, object);
-};
-
-export default { info, warn, error, debug };
+export default logger;

@@ -1,101 +1,105 @@
-import {
-	IModelRecords,
-	IViewRecords,
-	IViewSensor,
-	RecordByType,
-} from '../../types';
+import { Records } from '@prisma/client';
 
-function diffByType(payload: IModelRecords[]) {
-	const PAYLOAD_LENGTH = payload.length;
-	const TYPE_MAP = new Map<string, RecordByType>();
+type RecordsByType = {
+	type: string;
+	values: Records[];
+};
 
-	for (let i = 0; i < PAYLOAD_LENGTH; i++) {
-		let current = payload[i];
+type ViewRecord = {
+	value: number;
+	time: string;
+};
 
-		// If map don't know current type, then we assing it with initial value
-		if (!TYPE_MAP.has(current.type)) {
-			TYPE_MAP.set(current.type, {
-				type: current.type,
-				values: [current],
-			});
-			continue; // skipping next step
-		}
+type ViewSensor = {
+	location: string;
+	values: ViewRecord[];
+	average?: number;
+	minimum?: number;
+	maximum?: number;
+	chartColor?: string;
+};
 
-		const PREVIOUS = TYPE_MAP.get(current.type);
+type ViewRecords = {
+	type: string;
+	sensors: ViewSensor[];
+};
 
-		if (!PREVIOUS) {
+function differentiateByType(records: Records[]) {
+	const RECORDS_LENGTH = records.length;
+	const typeMap = new Map<string, RecordsByType>();
+
+	for (let i = 0; i < RECORDS_LENGTH; i++) {
+		const current = records[i];
+
+		if (typeMap.has(current.type)) {
+			const previous = typeMap.get(current.type);
+
+			previous?.values.push(current);
+
+			typeMap.set(current.type, previous!);
 			continue;
 		}
 
-		PREVIOUS.values.push(current);
-
-		TYPE_MAP.set(current.type, PREVIOUS);
+		typeMap.set(current.type, {
+			type: current.type,
+			values: [current],
+		});
 	}
 
-	let result: RecordByType[] = [];
+	// Converting Map<string, RecordsByType> to array of RecordsByType[]
+	const result: RecordsByType[] = [];
 
-	TYPE_MAP.forEach((type) => result.push(type));
+	typeMap.forEach((type) => result.push(type));
 
 	return result;
 }
 
-function diffByLocations(payload: RecordByType[]) {
-	const RESULT: IViewRecords[] = [];
-
-	payload.forEach((record) => {
+function differentiateByLabel(records: RecordsByType[]) {
+	const result: ViewRecords[] = [];
+	records.forEach((record) => {
 		const VALUES_LENGTH = record.values.length;
-		const LOC_MAP = new Map<string, IViewSensor>();
+		const locationMap = new Map<string, ViewSensor>();
 
 		for (let i = 0; i < VALUES_LENGTH; i++) {
-			let current = record.values[i];
+			const current = record.values[i];
 
-			if (!LOC_MAP.has(current.label)) {
-				LOC_MAP.set(current.label, {
-					location: current.label,
-					values: [
-						{
-							time: current.time,
-							value: current.value,
-						},
-					],
+			if (locationMap.has(current.label)) {
+				const previous = locationMap.get(current.label);
+
+				if (!previous) continue;
+
+				previous.values.push({
+					value: current.value,
+					time: current.time.toString(),
 				});
+
+				locationMap.set(current.label, previous);
+
 				continue;
 			}
 
-			const PREVIOUS = LOC_MAP.get(current.label);
-
-			if (!PREVIOUS) {
-				continue;
-			}
-
-			PREVIOUS.values.push({
-				time: current.time,
-				value: current.value,
+			locationMap.set(current.label, {
+				location: current.label,
+				values: [
+					{ value: current.value, time: current.time.toString() },
+				],
 			});
-
-			LOC_MAP.set(current.label, PREVIOUS);
 		}
 
-		let tmp: IViewSensor[] = [];
+		let locationArray: ViewSensor[] = [];
 
-		// Converting Map into Array
-		LOC_MAP.forEach((location) => tmp.push(location));
+		locationMap.forEach((sensor) => locationArray.push(sensor));
 
-		// Array of IVMRecords (ready for direct use in View)
-		RESULT.push({
+		result.push({
 			type: record.type,
-			sensors: tmp,
+			sensors: locationArray,
 		});
 	});
-
-	return RESULT;
 }
 
-function differentiateRecords(payload: IModelRecords[]) {
-	let byType = diffByType(payload);
-	let final = diffByLocations(byType);
+export function differentiateRecords(records: Records[]) {
+	const recordsByType = differentiateByType(records);
+	const finalResult = differentiateByLabel(recordsByType);
 
-	return final;
+	return finalResult;
 }
-
-export { differentiateRecords };

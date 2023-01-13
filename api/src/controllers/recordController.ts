@@ -1,38 +1,8 @@
 import asyncHandler from 'express-async-handler';
 import { Request, Response } from 'express';
-<<<<<<< Updated upstream
-import { getSensorMap } from '../utils/records/getSensorMap';
-import { differentiateRecords } from '../utils/records/differentiateRecords';
-import { prepareForChart } from '../utils/records/prepareForChart';
-
-/**--------------------------------------------------------------------
- * 
- * **Description:** This function will fetch single record
- *
- * **Route:** `[GET] /api/users/:branch/:id`
- *
- * **Access:** private
- * 
- ---------------------------------------------------------------------*/
-const getRecord = asyncHandler(async (req: Request, res: Response) => {
-	const { id, branch } = req.params;
-
-	const response = await maria.query(
-		'SELECT * FROM `Records` WHERE `id` = ? AND `branchId` = ?',
-		[id, branch]
-	);
-
-	if (!response) {
-		res.status(404);
-		throw new Error('No records found');
-	}
-
-	res.status(200).json(...response);
-});
-=======
 import prisma from '../config/prismaConnector';
 import moment from 'moment';
->>>>>>> Stashed changes
+import { differentiateRecords } from '../utils/records/differentiateRecords';
 
 /**--------------------------------------------------------------------
  * 
@@ -90,9 +60,10 @@ const getFilteredRecords = asyncHandler(async (req: Request, res: Response) => {
 		throw new Error('No records were found');
 	}
 
-	// TODO: Implement data structure conversion
+	// Differentiating records by Type and Label
+	const differentiatedRecords = differentiateRecords(records);
 
-	res.status(200).json(records);
+	res.status(200).json(differentiatedRecords);
 });
 
 export default { getBranchRecords, getFilteredRecords };

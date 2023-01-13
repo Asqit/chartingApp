@@ -4,8 +4,7 @@ import { Router } from 'express';
 
 const router = Router();
 
-router.get('/:branch/:id', protectedRoute, controller.getRecord);
-router.get('/:branch', protectedRoute, controller.getRecords);
-router.post('/', protectedRoute, controller.getFilteredRecords);
+router.get('/:branch', protectedRoute, controller.getBranchRecords);
+router.get('/:branch/:from/:to', protectedRoute, controller.getFilteredRecords);
 
 export default router;

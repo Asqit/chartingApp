@@ -1,12 +1,41 @@
-const errorHandler = (err: any, req: any, res: any, next: any) => {
+import { Request, Response, NextFunction } from 'express';
+<<<<<<< Updated upstream
+
+// prettier-ignore
+function errorHandler(err:Error, req:Request, res:Response, next:NextFunction) {
+	const STATUS_CODE = req.statusCode ? req.statusCode : 500;
+
+	if(process.env.NODE_ENV === "development") {
+		res.status(STATUS_CODE).json({
+			message: "An error occurred in server-side",
+			stack: err.stack
+		});
+		return;
+	}
+
+	res.status(STATUS_CODE).json({
+		message: "An error occurred in server-side"
+	})
+}
+=======
+import logger from '../config/logger';
+
+// prettier-ignore
+export default function errorHandler(err: Error, req:Request, res:Response, next:NextFunction) {
 	const STATUS_CODE = res.statusCode ? res.statusCode : 500;
 
-	res.status(STATUS_CODE);
+	logger.error("errorHandler", `An error occurred`, err);
 
-	res.json({
+	if(process.env.NODE_ENV === "production") {
+		res.status(STATUS_CODE).json({
+			message: err.message
+		});
+		return;
+	}
+>>>>>>> Stashed changes
+
+	res.status(STATUS_CODE).json({
 		message: err.message,
-		stack: process.env.NODE_ENV === 'production' ? null : err.stack,
-	});
-};
-
-export default errorHandler;
+		stack: err.stack
+	})
+}

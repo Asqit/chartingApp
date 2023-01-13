@@ -6,14 +6,14 @@ const prisma = new PrismaClient();
 
 prisma
 	.$connect()
-	.then((resp) => {
+	.then((resp: unknown) => {
 		logging.info(
 			'config/prismaConnector',
-			`prisma has conected to database`,
+			`prisma has connected to database`,
 			resp
 		);
 	})
-	.catch((err) => {
+	.catch((err: unknown) => {
 		logging.error(
 			'config/prismaConnector',
 			`prisma cannot connect to database`,

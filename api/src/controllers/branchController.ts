@@ -1,6 +1,6 @@
 import asyncHandler from 'express-async-handler';
 import { Request, Response } from 'express';
-import maria from '../config/mariaConnector';
+import prisma from '../config/prismaConnector';
 
 /**--------------------------------------------------------------------
  * 
@@ -14,12 +14,16 @@ import maria from '../config/mariaConnector';
 const getBranch = asyncHandler(async (req: Request, res: Response) => {
 	const { id } = req.params;
 
-	const response = await maria.query(
-		'SELECT * FROM `Branches` WHERE `id` = ?',
-		id
-	);
+	const response = await prisma.branches.findUnique({
+		where: { id: +id },
+	});
 
-	res.status(200).json(...response);
+	if (!response) {
+		res.status(404);
+		throw new Error('Branch not found');
+	}
+
+	res.status(200).json(response);
 });
 
 /**--------------------------------------------------------------------
@@ -32,9 +36,14 @@ const getBranch = asyncHandler(async (req: Request, res: Response) => {
  * 
  ---------------------------------------------------------------------*/
 const getBranches = asyncHandler(async (req: Request, res: Response) => {
-	const response = await maria.query('SELECT * FROM `Branches`');
+	const response = await prisma.branches.findMany();
 
-	res.status(200).json([...response]);
+	if (!response) {
+		res.status(404);
+		throw new Error('No branches were found');
+	}
+
+	res.status(200).json(response);
 });
 
 export default { getBranch, getBranches };

@@ -1,7 +1,6 @@
 import asyncHandler from 'express-async-handler';
-import maria from '../config/mariaConnector';
-import moment from 'moment';
 import { Request, Response } from 'express';
+<<<<<<< Updated upstream
 import { getSensorMap } from '../utils/records/getSensorMap';
 import { differentiateRecords } from '../utils/records/differentiateRecords';
 import { prepareForChart } from '../utils/records/prepareForChart';
@@ -30,6 +29,10 @@ const getRecord = asyncHandler(async (req: Request, res: Response) => {
 
 	res.status(200).json(...response);
 });
+=======
+import prisma from '../config/prismaConnector';
+import moment from 'moment';
+>>>>>>> Stashed changes
 
 /**--------------------------------------------------------------------
  * 
@@ -40,13 +43,12 @@ const getRecord = asyncHandler(async (req: Request, res: Response) => {
  * **Access:** private
  * 
  ---------------------------------------------------------------------*/
-const getRecords = asyncHandler(async (req: Request, res: Response) => {
+const getBranchRecords = asyncHandler(async (req: Request, res: Response) => {
 	const { branch } = req.params;
 
-	const response = await maria.query(
-		'SELECT * FROM `Records` WHERE `branchId` = ?',
-		[branch]
-	);
+	const response = await prisma.records.findMany({
+		where: { branchId: +branch },
+	});
 
 	if (!response) {
 		res.status(404);
@@ -66,27 +68,31 @@ const getRecords = asyncHandler(async (req: Request, res: Response) => {
  * 
  ---------------------------------------------------------------------*/
 const getFilteredRecords = asyncHandler(async (req: Request, res: Response) => {
-	const { branch, from, to } = req.body;
+	const { branch, from, to } = req.params;
 
-	// Converting JS date to MySQL compatible format
-	let dateFrom = moment(from).format('YYYY-MM-DD k-m-s');
-	let dateTo = moment(to).format('YYYY-MM-DD k-m-s');
+	const dateFrom = moment(from).format('YYYY-MM-DD k-m-s');
+	const dateTo = moment(to).format('YYYY-MM-DD k-m-s');
 
-	const resp = await maria.query(
-		'SELECT * FROM `Records` WHERE `branchId` = ? AND `time` >= ? AND `time` <= ? ORDER BY `time` ASC',
-		[branch, dateFrom, dateTo]
-	);
+	const records = await prisma.records.findMany({
+		where: {
+			branchId: +branch,
+			AND: {
+				time: {
+					gte: dateFrom,
+					lte: dateTo,
+				},
+			},
+		},
+	});
 
-	if (!resp) {
+	if (!records) {
 		res.status(404);
-		throw new Error('No records found');
+		throw new Error('No records were found');
 	}
 
-	let sensorMap = await getSensorMap(branch);
-	let temporaryData = differentiateRecords(resp);
-	let data = prepareForChart(temporaryData, sensorMap);
+	// TODO: Implement data structure conversion
 
-	res.status(200).json([...data]);
+	res.status(200).json(records);
 });
 
-export default { getRecord, getRecords, getFilteredRecords };
+export default { getBranchRecords, getFilteredRecords };

@@ -1,16 +1,16 @@
 import { Records } from '@prisma/client';
 
-type RecordsByType = {
+export type RecordsByType = {
 	type: string;
 	values: Records[];
 };
 
-type ViewRecord = {
+export type ViewRecord = {
 	value: number;
 	time: string;
 };
 
-type ViewSensor = {
+export type ViewSensor = {
 	location: string;
 	values: ViewRecord[];
 	average?: number;
@@ -19,7 +19,7 @@ type ViewSensor = {
 	chartColor?: string;
 };
 
-type ViewRecords = {
+export type ViewRecords = {
 	type: string;
 	sensors: ViewSensor[];
 };
@@ -95,6 +95,8 @@ function differentiateByLabel(records: RecordsByType[]) {
 			sensors: locationArray,
 		});
 	});
+
+	return result;
 }
 
 export function differentiateRecords(records: Records[]) {

@@ -1,13 +1,4 @@
-import { SensorType } from '../../types';
-
-/**
- * @param {SensorType} type
- * @returns {string} The color which should be used in client's charting component
- *
- * ### Description
- * So to ease client-side as much as possible I created this function, which basically evaluate color for each reacord type
- */
-function getChartColor(type: SensorType | string) {
+function getChartColor(type: string) {
 	switch (type) {
 		case 'Teplota':
 			return '#df2e36';

@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 import prisma from '../config/prismaConnector';
 import moment from 'moment';
 import { differentiateRecords } from '../utils/records/differentiateRecords';
+import { prepareForChart } from '../utils/records/prepareForChart';
 
 /**--------------------------------------------------------------------
  * 
@@ -62,8 +63,9 @@ const getFilteredRecords = asyncHandler(async (req: Request, res: Response) => {
 
 	// Differentiating records by Type and Label
 	const differentiatedRecords = differentiateRecords(records);
+	const final = prepareForChart(differentiatedRecords);
 
-	res.status(200).json(differentiatedRecords);
+	res.status(200).json(final);
 });
 
 export default { getBranchRecords, getFilteredRecords };

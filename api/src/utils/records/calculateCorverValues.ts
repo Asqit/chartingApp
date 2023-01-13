@@ -1,12 +1,8 @@
-import { IViewRecord, CornerValues } from '../../types';
+import { ViewRecord } from './differentiateRecords';
 
-/**
- * @param {IViewRecord} payload
- * @returns {CornerValues}
- *
- * This function will calculate minimum, maximum and average of each sensor
- */
-function calculateCornerValues(payload: IViewRecord[]): CornerValues {
+export type StatsValues = { min: number; avg: number; max: number };
+
+function calculateCornerValues(payload: ViewRecord[]): StatsValues {
 	const PAYLOAD_LENGTH = payload.length;
 	let min, max, avg;
 

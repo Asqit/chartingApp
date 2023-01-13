@@ -1,13 +1,9 @@
-import { IModelSensorMap, IViewRecords } from '../../types';
 import { getProperType } from './getProperType';
 import { calculateCornerValues } from './calculateCorverValues';
 import { getChartColor } from './getChartColor';
-import { getSensorName } from './getSensorName';
+import { ViewRecords } from './differentiateRecords';
 
-function prepareForChart(
-	payload: IViewRecords[],
-	sensorMap: IModelSensorMap[]
-) {
+function prepareForChart(payload: ViewRecords[]) {
 	payload.forEach((record) => {
 		record.type = getProperType(record.type);
 
@@ -23,12 +19,6 @@ function prepareForChart(
 			currentSensor.maximum = cornerValues.max;
 
 			currentSensor.chartColor = getChartColor(record.type);
-
-			let sensorName = getSensorName(sensorMap, currentSensor.location);
-
-			if (sensorName) {
-				currentSensor.location = sensorName;
-			}
 		}
 	});
 

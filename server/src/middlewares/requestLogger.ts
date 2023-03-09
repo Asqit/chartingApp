@@ -1,18 +1,13 @@
-import { Request, Response, NextFunction } from 'express';
-import logger from '../config/logger';
+import { Request, Response, NextFunction } from "express";
+import logger from "../config/logger";
 
-// prettier-ignore
-export default function requestLogger(req:Request, res:Response, next:NextFunction) {
-    logger.info(
-		"requestLogger",
-		`METHOD - [${req.method}], URL - [${req.url}], IP - [${req.socket.remoteAddress}]`
-	);
+export default function requestLogger(req: Request, res: Response, next: NextFunction) {
+	const { method, url, socket } = req;
 
-	res.on('finish', () => {
-		logger.info(
-			"requestLogger",
-			`METHOD - [${req.method}], URL - [${req.url}], IP - [${req.socket.remoteAddress}], STATUS - [${res.statusCode}]`
-		);
+	logger.info(`Method - [${method}], Url - [${url}], Ip - [${socket.remoteAddress}]`);
+
+	res.on("finish", () => {
+		logger.info(`Method - [${method}], Url - [${url}], Ip - [${socket.remoteAddress}], Status - [${res.statusCode}]`);
 	});
 
 	next();

@@ -11,7 +11,7 @@ import prisma from '../config/prismaConnector';
  * **Access:** private
  * 
  ---------------------------------------------------------------------*/
-const getBranch = asyncHandler(async (req: Request, res: Response) => {
+export const getBranch = asyncHandler(async (req: Request, res: Response) => {
 	const { id } = req.params;
 
 	const response = await prisma.branches.findUnique({
@@ -35,7 +35,7 @@ const getBranch = asyncHandler(async (req: Request, res: Response) => {
  * **Access:** private
  * 
  ---------------------------------------------------------------------*/
-const getBranches = asyncHandler(async (req: Request, res: Response) => {
+export const getBranches = asyncHandler(async (req: Request, res: Response) => {
 	const response = await prisma.branches.findMany();
 
 	if (!response) {
@@ -45,5 +45,3 @@ const getBranches = asyncHandler(async (req: Request, res: Response) => {
 
 	res.status(200).json(response);
 });
-
-export default { getBranch, getBranches };

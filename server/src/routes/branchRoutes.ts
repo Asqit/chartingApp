@@ -1,5 +1,5 @@
-import controller from '../controllers/branchController';
-import protectedRoute from '../middlewares/protectedRoute';
+import * as controller from '../controllers/branchController';
+import { protectedRoute } from '../middlewares/protectedRoute';
 import { Router } from 'express';
 
 const router = Router();

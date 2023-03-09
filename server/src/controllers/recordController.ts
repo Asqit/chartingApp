@@ -14,7 +14,7 @@ import { prepareForChart } from '../utils/records/prepareForChart';
  * **Access:** private
  * 
  ---------------------------------------------------------------------*/
-const getBranchRecords = asyncHandler(async (req: Request, res: Response) => {
+export const getBranchRecords = asyncHandler(async (req: Request, res: Response) => {
 	const { branch } = req.params;
 
 	const response = await prisma.records.findMany({
@@ -38,7 +38,7 @@ const getBranchRecords = asyncHandler(async (req: Request, res: Response) => {
  * **Access:** private
  * 
  ---------------------------------------------------------------------*/
-const getFilteredRecords = asyncHandler(async (req: Request, res: Response) => {
+export const getFilteredRecords = asyncHandler(async (req: Request, res: Response) => {
 	const { branch, from, to } = req.params;
 
 	const dateFrom = moment(from).format('YYYY-MM-DD k-m-s');
@@ -67,5 +67,3 @@ const getFilteredRecords = asyncHandler(async (req: Request, res: Response) => {
 
 	res.status(200).json(final);
 });
-
-export default { getBranchRecords, getFilteredRecords };

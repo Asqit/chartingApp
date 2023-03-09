@@ -1,5 +1,6 @@
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from "express";
 
-export default function notFound(req: Request, res: Response) {
-	res.status(404).json({ message: 'not found' });
+export default function notFound(req: Request, res: Response, next: NextFunction) {
+	res.sendStatus(404);
+	next();
 }

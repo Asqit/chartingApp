@@ -1,33 +1,41 @@
-import { Request, Response, NextFunction } from 'express';
-import asyncHandler from 'express-async-handler';
-import { verify } from 'jsonwebtoken';
-import prisma from '../config/prismaConnector';
+import { Request, Response, NextFunction } from "express";
+import { verify } from "jsonwebtoken";
+import prisma from "../config/prismaConnector";
+import asyncHandler from "express-async-handler";
+import { AppError } from "../utils/AppError";
+import {isChartingAppToken} from "../utils/createToken";
 
-const protectedRoute = asyncHandler(
-	async (req: Request, res: Response, next: NextFunction) => {
-		const token = req.cookies.auth;
-		const salt = process.env.ACCESS_TOKEN_SECRET!;
+export const protectedRoute = asyncHandler(
+	async (req:Request, res:Response, next:NextFunction) => {
+		const HEADER = req.headers["authorization"];
+		const ACCESS_TOKEN = HEADER && HEADER.split(" ")[1];
 
-		if (token) {
-			try {
-				const details = Object(
-					verify(token, salt, { algorithms: ['HS512'] })
-				);
-
-				res.locals.user = await prisma.users.findUnique({
-					where: { id: details.id },
-				});
-
-				next();
-			} catch (error) {
-				res.status(401);
-				throw new Error('Not authorized');
-			}
-		} else {
-			res.status(401);
-			throw new Error('Not authorized. (missing token)');
+		if (!ACCESS_TOKEN) {
+			throw new AppError(401, "Missing access token");
 		}
+
+		const SECRET = process.env.ACCESS_TOKEN_SECRET;
+
+		if (!SECRET) {
+			throw new AppError(500, "Server error");
+		}
+		
+		const decoded = verify(ACCESS_TOKEN, SECRET, { algorithms: ["HS512"] }); 
+	
+		if (!isChartingAppToken(decoded)) {
+			throw new AppError(401, "Invalid token");
+		}
+
+		const userTest = await prisma.users.findFirst({
+			where: { email: decoded.email }
+		});
+
+		if (!userTest) {
+			throw new AppError(401, "Invalid token payload");
+		}
+
+		res.locals.userId = userTest.id;
+
+		next();
 	}
 );
-
-export default protectedRoute;

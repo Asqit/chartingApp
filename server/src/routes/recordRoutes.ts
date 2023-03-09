@@ -1,5 +1,5 @@
-import controller from '../controllers/recordController';
-import protectedRoute from '../middlewares/protectedRoute';
+import * as controller from '../controllers/recordController';
+import { protectedRoute } from '../middlewares/protectedRoute';
 import { Router } from 'express';
 
 const router = Router();

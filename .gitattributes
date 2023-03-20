@@ -1,3 +1,2 @@
 # Auto detect text files and perform LF normalization
-# FUCK CRLF all my homies uses LF
 * text=auto

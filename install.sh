@@ -15,13 +15,13 @@ fi
 # prepare client 
 cd client 
 
-yarn  
+yarn install 
 yarn run build
 
 # prepare server
 cd ../api
 
-yarn  
+#yarn install 
 touch .env
 cat env-sample.txt > .env
 

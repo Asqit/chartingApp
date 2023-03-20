@@ -1,0 +1,19 @@
+const CustomizedAxisTick = (props: { x: number; y: number; payload: { value: string } }) => {
+  return (
+    <g transform={`translate(${props.x},${props.y})`}>
+      <text fontSize={12} x={0} y={0} dy={16} textAnchor="end" fill="black" transform="rotate(-35)">
+        {props.payload.value}
+      </text>
+    </g>
+  )
+}
+
+const CustomizedYAxisTick = (props: { x: number; y: number; payload: { value: string } }) => {
+  return (
+    <g transform={`translate(${props.x},${props.y})`}>
+      <text fontSize="12px" x={0} y={0} dy={0} textAnchor="end" fill="black">
+        {props.payload.value}
+      </text>
+    </g>
+  )
+}
